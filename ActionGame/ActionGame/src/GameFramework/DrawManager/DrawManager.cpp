@@ -7,40 +7,94 @@
 
 
 
+/*									//
+//			コンストラクタ			//
+//									*/
+DrawManagerBase::DrawManagerBase() {
 
-DrawManagerBase::DrawManagerBase()
-{
 }
 
-DrawManagerBase::~DrawManagerBase()
-{
+
+/*									//
+//			デストラクタ			//
+//									*/
+DrawManagerBase::~DrawManagerBase() {
+
 }
 
 
+/*									//
+//			リスト取得				//
+//									*/
+void DrawManagerBase::SetList(Obj3DManagerBase* mana) {
+	m_pObjList = mana->GetList();
+}
+
+
+/*									//
+//				描画				//
+//									*/
 void DrawManagerBase::Draw() {
+	for (auto it = m_pObjList->begin(); it != m_pObjList->end(); ++it) {
+		// 親の確認
+		if ((*it)->pObj->GetTransform()->CheckParent())
+			continue;
 
+		(*it)->pObj->DrawAll();
+	}
 }
 
 
+/*									//
+//				後描画				//
+//									*/
 void DrawManagerBase::LateDraw() {
+	for (auto it = m_pObjList->begin(); it != m_pObjList->end(); ++it) {
+		// 親の確認
+		if ((*it)->pObj->GetTransform()->CheckParent())
+			continue;
+
+		(*it)->pObj->LateDrawAll();
+	}
 }
 
 
+/*									//
+//				抽出				//
+//									*/
 void DrawManagerBase::Extract() {
+	CheckFrustum();
+	CheckOclusion();
+}
+
+
+/*									//
+//				影作成				//
+//									*/
+void DrawManagerBase::CreateShadow() {
 
 }
 
 
-void DrawManagerBase::DrawShadow() {
-
-}
-
-
+/*									//
+//				視錐台				//
+//									*/
 void DrawManagerBase::CheckFrustum() {
 
 }
 
 
+/*									//
+//			オクルージョン			//
+//									*/
+void DrawManagerBase::CheckOclusion() {
+
+}
+
+
+/*									//
+//			フィルタ描画			//
+//									*/
 void DrawManagerBase::FilterDraw() {
 
 }

@@ -65,14 +65,13 @@ public:
 	// あたり判定
 	void CheckCollider();
 
-	//----- 描画
-	void Draw();
-	void LateDraw();
-
 	void SetHelper(bool helper) { m_bHelper = helper; }
 
 	// オクツリー
 	bool CreateTree(unsigned int Level, Vector3& Min, Vector3& Max);
+
+	// リスト
+	list<_3DOBJ*>* GetList() { return &m_lstObj; }
 
 #pragma endregion
 

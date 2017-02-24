@@ -29,6 +29,7 @@
 #include	"../../GameFramework/framework/Input/Input.h"
 #include	"../../Pose/Pose.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
+#include	"../../GameFramework/DrawManager/DrawManager.h"
 
 /*									//
 //			コンストラクタ			//
@@ -256,10 +257,10 @@ void GameScene::Draw() {
 	GetCameraManager()->Set("Main");
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	GetObj3DManager()->Draw();
+	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	GetObj3DManager()->LateDraw();
+	GetDrawManager()->LateDraw();
 
 	GetObj2DManager()->Draw();
 	GetObj2DManager()->LateDraw();

@@ -28,7 +28,8 @@ GameDirectX9Base::GameDirectX9Base(Application* app) :
 	m_pShaderManager(NULL),
 	m_pObj3DManager(NULL),
 	m_pObj2DManager(NULL),
-	m_pControllerManager(NULL)
+	m_pControllerManager(NULL),
+	m_pDrawManager(NULL)
 {
 }
 
@@ -76,6 +77,7 @@ HRESULT GameDirectX9Base::Release() {
 //			ƒAƒvƒŠ‚Ì‰ğ•ú			//
 //									*/
 HRESULT GameDirectX9Base::ReleaseApp() {
+	SAFE_DELETE(m_pDrawManager);
 	SAFE_DELETE(m_pSceneManager);
 	SAFE_DELETE(m_pObj2DManager);
 	SAFE_DELETE(m_pObj3DManager);
@@ -130,6 +132,8 @@ HRESULT GameDirectX9Base::InitApp() {
 	m_pSceneManager->SetLoadWait(10);
 	m_pControllerManager = new GameControllerManager;
 	m_pControllerManager->Create();
+	m_pDrawManager = new DrawManager;
+	m_pDrawManager->SetList(m_pObj3DManager);
 
 	return S_OK;
 }

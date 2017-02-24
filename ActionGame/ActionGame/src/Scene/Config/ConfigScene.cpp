@@ -10,6 +10,7 @@
 #include	"../../GameFramework/GameController/GameControllerManager.h"
 #include	"../../GameFramework/framework/Scene/SceneManagerWin.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
+#include	"../../GameFramework/DrawManager/DrawManager.h"
 
 
 
@@ -72,10 +73,10 @@ void ConfigScene::Update() {
 void ConfigScene::Draw() {
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	GetObj3DManager()->Draw();
+	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	GetObj3DManager()->LateDraw();
+	GetDrawManager()->LateDraw();
 
 	GetObj2DManager()->Draw();
 	GetObj2DManager()->LateDraw();

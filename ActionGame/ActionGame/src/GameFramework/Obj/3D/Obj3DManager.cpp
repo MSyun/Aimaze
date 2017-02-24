@@ -316,29 +316,6 @@ bool Obj3DManagerBase::Collision(Collider* A, Collider* B) {
 }
 
 
-/*									//
-//				描画				//
-//									*/
-void Obj3DManagerBase::Draw() {
-	for (auto it = m_lstObj.begin(); it != m_lstObj.end(); ++it) {
-		// 親の確認
-		if ((*it)->pObj->GetTransform()->CheckParent())
-			continue;
-
-		(*it)->pObj->DrawAll();
-	}
-}
-void Obj3DManagerBase::LateDraw() {
-	for (auto it = m_lstObj.begin(); it != m_lstObj.end(); ++it) {
-		// 親の確認
-		if ((*it)->pObj->GetTransform()->CheckParent())
-			continue;
-
-		(*it)->pObj->LateDrawAll();
-	}
-}
-
-
 
 /*									//
 //			オクツリー				//

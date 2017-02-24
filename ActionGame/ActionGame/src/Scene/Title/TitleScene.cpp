@@ -17,6 +17,8 @@
 #include	"../../GameFramework/Sprite/FadeColor/FadeColorSprite.h"
 #include	"../../GameFramework/framework/Sound/SoundManager.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
+#include	"../../GameFramework/DrawManager/DrawManager.h"
+
 
 
 typedef enum {
@@ -266,10 +268,10 @@ void TitleScene::ChangeScene() {
 void TitleScene::Draw() {
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	GetObj3DManager()->Draw();
+	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	GetObj3DManager()->LateDraw();
+	GetDrawManager()->LateDraw();
 
 	GetObj2DManager()->Draw();
 	GetObj2DManager()->LateDraw();

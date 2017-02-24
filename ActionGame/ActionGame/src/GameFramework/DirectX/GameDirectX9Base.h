@@ -17,6 +17,7 @@
 #include	"../Obj/3D/Obj3DManager.h"
 #include	"../Obj/2D/Obj2DManager.h"
 #include	"../GameController/GameControllerManager.h"
+#include	"../DrawManager/DrawManager.h"
 
 
 class	GameDirectX9Base	:	public	DX9Base {
@@ -34,6 +35,7 @@ protected:
 	Obj3DManager*			m_pObj3DManager;
 	Obj2DManager*			m_pObj2DManager;
 	GameControllerManager*	m_pControllerManager;
+	DrawManager*			m_pDrawManager;
 
 #pragma endregion
 
