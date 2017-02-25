@@ -1,15 +1,10 @@
 // 視差マッピングシェーダ
 
+#include	"PosCreator.fh"
+
 // -------------------------------------------------------------
 // グローバル変数
 // -------------------------------------------------------------
-
-float4x4 matWorld[4]	:	WORLD;		// ワールド変換行列配列
-float4x4 matView		:	VIEW;		// ビュー変換行列
-float4x4 matProj		:	PROJECTION;	// 射影変換行列
-
-int iBlendNum;							// ブレンドする配列の数
-
 float4	vLightDir;					// ライトの方向
 float4	vColor;						// ライト＊メッシュの色
 float3	vEyePos;					// カメラの位置（ローカル座標系）
@@ -18,8 +13,7 @@ float	SpecularPower = 0.0f;		// スペキュラーの強さ(0にするとランバートになる)
 float	fHLimit = 0.016;			// 高さの最大値（大きくするほど高くなる
 
 texture tex;
-sampler TexSamp = sampler_state
-{
+sampler TexSamp = sampler_state {
 	texture = <tex>;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
@@ -30,8 +24,7 @@ sampler TexSamp = sampler_state
 };
 
 texture Bumptex;
-sampler BumpSamp = sampler_state
-{
+sampler BumpSamp = sampler_state {
 	texture = <Bumptex>;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
@@ -45,8 +38,7 @@ sampler BumpSamp = sampler_state
 // -------------------------------------------------------------
 // 頂点シェーダからピクセルシェーダに渡すデータ
 // -------------------------------------------------------------
-struct VS_OUTPUT
-{
+struct VS_OUTPUT {
 	float4	Pos			: POSITION;
 	float2	Tex			: TEXCOORD0;
 	float3	Light		: TEXCOORD1;
@@ -56,7 +48,7 @@ struct VS_OUTPUT
 // シーンの描画
 // -------------------------------------------------------------
 VS_OUTPUT VS(
-		float3 Pos		: POSITION,			// ローカル位置座標
+		float4 Pos		: POSITION,			// ローカル位置座標
 		float3 Tangent	: TANGENT0,			// 接戦ベクトル
 		float3 Binormal	: BINORMAL0,		// 従法線ベクトル
 		float3 Normal	: NORMAL,			// 法線ベクトル
@@ -65,34 +57,33 @@ VS_OUTPUT VS(
 	VS_OUTPUT Out = (VS_OUTPUT)0;			// 出力データ
 	
 	// 座標変換
+	Out.Pos = PosCreator(Pos, matWorld[0]);
+
 	float4 position;
-	Out.Pos = mul( float4(Pos, 1.0f), matWorld[0] );
-	position = Out.Pos;
-	Out.Pos = mul( Out.Pos, matView );
-	Out.Pos = mul( Out.Pos, matProj );
+	position = mul(Pos, matWorld[0]);
 
 	// テクスチャ
 	Out.Tex = Tex;
 	
 	// 視線ベクトル
-	float3 Eye = normalize( vEyePos - position.xyz );
-	Out.Eye.x = dot( Eye, Tangent );
-	Out.Eye.y = dot( Eye, Binormal );
-	Out.Eye.z = dot( Eye, Normal );
-	Out.Eye = normalize( Out.Eye );
+	float3 Eye = normalize(vEyePos - position.xyz);
+	Out.Eye.x = dot(Eye, Tangent);
+	Out.Eye.y = dot(Eye, Binormal);
+	Out.Eye.z = dot(Eye, Normal);
+	Out.Eye = normalize(Out.Eye);
 
 	// ライトベクトル
 	float3 Light = -vLightDir.xyz;
-	Out.Light.x = dot( Light, Tangent );
-	Out.Light.y = dot( Light, Binormal );
-	Out.Light.z = dot( Light, Normal );
-	Out.Light = normalize( Out.Light );
+	Out.Light.x = dot(Light, Tangent);
+	Out.Light.y = dot(Light, Binormal);
+	Out.Light.z = dot(Light, Normal);
+	Out.Light = normalize(Out.Light);
 
 	return Out;
 }
 // スキンメッシュバージョン
 VS_OUTPUT VS_SKIN(
-		float3 Pos		: POSITION,			// ローカル位置座標
+		float4 Pos		: POSITION,			// ローカル位置座標
 		float4 W		: BLENDWEIGHT,		// 重み
 		float3 Tangent	: TANGENT0,			// 接戦ベクトル
 		float3 Binormal	: BINORMAL0,		// 従法線ベクトル
@@ -102,41 +93,28 @@ VS_OUTPUT VS_SKIN(
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
 	//----- 座標変換
-	float		Weight[4] = (float[4])W;	// 重みをfloatに分割
-	float		LastBlendWeight = 0.0f;		// 最後の行列に掛けられる重み
-	float4x4	matCombWorld = 0.0f;		// 合成ワールド変換行列
-
-	// ワールド変換行列をブレンド
-	for( int i = 0; i < iBlendNum-1; i++ ) {
-		LastBlendWeight += Weight[i];				// 最後の重みをここで計算しておく
-		matCombWorld += matWorld[i] * Weight[i];
-	}
-
-	// 最後の重みを足し算
-	matCombWorld += matWorld[iBlendNum-1] * (1.0f-LastBlendWeight);
+	float4x4 matWorld = SkinWorldCreator(W);
+	Out.Pos = PosCreator(Pos, matWorld);
 
 	float4 position;
-	Out.Pos = mul( Pos, matCombWorld );	// ワールド変換
-	position = Out.Pos;
-	Out.Pos = mul( Out.Pos, matView );	// ビュー変換
-	Out.Pos = mul( Out.Pos, matProj );	// 射影変換
+	position = mul(Pos, matWorld);
 
 	//----- テクスチャ
 	Out.Tex = Tex;
 
 	// 視線ベクトル
-	float3 Eye = normalize( vEyePos - position.xyz );
-	Out.Eye.x = dot( Eye, Tangent );
-	Out.Eye.y = dot( Eye, Binormal );
-	Out.Eye.z = dot( Eye, Normal );
-	Out.Eye = normalize( Out.Eye );
+	float3 Eye = normalize(vEyePos - position.xyz);
+	Out.Eye.x = dot(Eye, Tangent);
+	Out.Eye.y = dot(Eye, Binormal);
+	Out.Eye.z = dot(Eye, Normal);
+	Out.Eye = normalize(Out.Eye);
 
 	// ライトベクトル
 	float3 Light = -vLightDir.xyz;
-	Out.Light.x = dot( Light, Tangent );
-	Out.Light.y = dot( Light, Binormal );
-	Out.Light.z = dot( Light, Normal );
-	Out.Light = normalize( Out.Light );
+	Out.Light.x = dot(Light, Tangent);
+	Out.Light.y = dot(Light, Binormal);
+	Out.Light.z = dot(Light, Normal);
+	Out.Light = normalize(Out.Light);
 
 	return Out;
 }

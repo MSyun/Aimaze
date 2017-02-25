@@ -1,19 +1,12 @@
-// -------------------------------------------------------------
 // 鏡面反射光
 // 
 // スキンメッシュ部分にバグあり
-// -------------------------------------------------------------
+
+#include	"PosCreator.fh"
 
 // -------------------------------------------------------------
 // グローバル変数
 // -------------------------------------------------------------
-
-float4x4 matWorld[4]	:	WORLD;		// ワールド変換行列配列
-float4x4 matView		:	VIEW;		// ビュー変換行列
-float4x4 matProj		:	PROJECTION;	// 射影変換行列
-
-int iBlendNum;							// ブレンドする配列の数
-
 float4	vLightDir;					// ライトの方向
 float4	vColor;						// ライト＊メッシュの色
 float3	vEyePos;					// カメラの位置（ローカル座標系）
@@ -22,8 +15,7 @@ float	SpecularPower = 1.0f;		// スペキュラーの強さ(0にするとランバートになる)
 float	LightBloomPower = 1.0f;		// ライトブルームの強さ
 
 texture tex;
-sampler TexSamp = sampler_state
-{
+sampler TexSamp = sampler_state {
 	texture = <tex>;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
@@ -37,8 +29,7 @@ sampler TexSamp = sampler_state
 // -------------------------------------------------------------
 // 頂点シェーダからピクセルシェーダに渡すデータ
 // -------------------------------------------------------------
-struct VS_OUTPUT
-{
+struct VS_OUTPUT {
 	float4	Pos			: POSITION;
 	float4	Color		: COLOR0;
 	float2	Tex			: TEXCOORD0;
@@ -49,19 +40,18 @@ struct VS_OUTPUT
 // シーンの描画
 // -------------------------------------------------------------
 VS_OUTPUT VS(
-		float3 Pos		: POSITION,			// ローカル位置座標
+		float4 Pos		: POSITION,			// ローカル位置座標
 		float3 Normal	: NORMAL,			// 法線ベクトル
 		float2 Tex		: TEXCOORD0			// テクスチャ
 ){
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 	
 	// 座標変換
+	Out.Pos = PosCreator(Pos, matWorld[0]);
+
 //	float4 position;
-	Out.Pos = mul( float4(Pos, 1.0f), matWorld[0] );
-//	position = Out.Pos;
+//	position = mul( float4(Pos, 1.0f), matWorld[0] );
 //	Normal = mul( Normal, (float3x3)matWorld[0] );
-	Out.Pos = mul( Out.Pos, matView );
-	Out.Pos = mul( Out.Pos, matProj );
 
 	// テクスチャ
 	Out.Tex = Tex;
@@ -81,7 +71,7 @@ VS_OUTPUT VS(
 }
 // スキンメッシュバージョン
 VS_OUTPUT VS_SKIN(
-		float3 Pos		: POSITION,			// ローカル位置座標
+		float4 Pos		: POSITION,			// ローカル位置座標
 		float3 Normal	: NORMAL,			// 法線ベクトル
 		float2 Tex		: TEXCOORD0,		// テクスチャ
 		float4 W		: BLENDWEIGHT		// 重み
@@ -89,25 +79,12 @@ VS_OUTPUT VS_SKIN(
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
 	//----- 座標変換
-	float		Weight[4] = (float[4])W;	// 重みをfloatに分割
-	float		LastBlendWeight = 0.0f;		// 最後の行列に掛けられる重み
-	float4x4	matCombWorld = 0.0f;		// 合成ワールド変換行列
-
-	// ワールド変換行列をブレンド
-	for( int i = 0; i < iBlendNum-1; i++ ) {
-		LastBlendWeight += Weight[i];				// 最後の重みをここで計算しておく
-		matCombWorld += matWorld[i] * Weight[i];
-	}
-
-	// 最後の重みを足し算
-	matCombWorld += matWorld[iBlendNum-1] * (1.0f-LastBlendWeight);
+	float4x4 matWorld = SkinWorldCreator(W);
+	Out.Pos = PosCreator(Pos, matWorld);
 
 	float4 position;
-	Out.Pos = mul( float4(Pos, 1.0f), matCombWorld );	// ワールド変換
-	position = Out.Pos;
-	Normal = mul( Normal, (float3x3)matCombWorld );
-	Out.Pos = mul( Out.Pos, matView );	// ビュー変換
-	Out.Pos = mul( Out.Pos, matProj );	// 射影変換
+	position = mul(Pos, matWorld);
+	Normal = mul(Normal, (float3x3)matWorld);
 
 	//----- テクスチャ
 	Out.Tex = Tex;
@@ -126,8 +103,7 @@ VS_OUTPUT VS_SKIN(
 }
 
 // -------------------------------------------------------------
-struct PS_OUTPUT
-{
+struct PS_OUTPUT {
 	float4 Col		:	COLOR0;
 	float4 Luminous	:	COLOR1;
 };
