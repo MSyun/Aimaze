@@ -4,7 +4,7 @@
 
 
 #include	"DrawManager.h"
-
+#include	"../framework/Shader/ShaderManager.h"
 
 
 /*									//
@@ -72,7 +72,17 @@ void DrawManagerBase::Extract() {
 //				‰eì¬				//
 //									*/
 void DrawManagerBase::CreateShadow() {
+	IHlslBase* shadow = GetShaderManager()->Get(SHADER_SHADOW);
+	shadow->Begin();
 
+	for (auto it = m_pObjList->begin(); it != m_pObjList->end(); ++it) {
+		if ((*it)->pObj->GetTransform()->CheckParent())
+			continue;
+
+		(*it)->pObj->DrawShadow();
+	}
+
+	shadow->End();
 }
 
 

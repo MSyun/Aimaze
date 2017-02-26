@@ -16,7 +16,7 @@
 #include	"Toon/Toon.h"
 #include	"ParallaxMapping/ParallaxMapping.h"
 #include	"CrossFilter/CrossFilter.h"
-
+#include	"ShadowMap/ShadowMap.h"
 
 using namespace std;
 
@@ -33,6 +33,7 @@ typedef	enum {
 	SHADER_LAMBERT,		// ランバート
 	SHADER_PHONG,		// フォン
 	SHADER_PARALLAX,	// 視差
+	SHADER_SHADOW,		// 影
 	SHADER_HALFLAMBERT,	// ハーフランバート
 	SHADER_TOON,		// トゥーン
 	SHADER_GAUSS,		// ガウスフィルタ

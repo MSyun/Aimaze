@@ -3,6 +3,7 @@
 // 2016. 5.19	ƒvƒƒOƒ‰ƒ€ì¬
 // 2016. 5.21	InputŠÖ”’Ç‰Á
 // 2017. 1. 1	OnActiveŠÖ”’Ç‰Á
+// 2017. 2.26	‰eˆ—’Ç‰Á
 // Author		SyunMizuno
 //////////////////////////////////////////////////////////////
 
@@ -34,6 +35,7 @@ private:
 	bool	m_bDestroy;		// íœ
 
 	bool	m_bInit;		// ‰Šú‰»
+	bool	m_bShadow;		// ‰e
 
 	CPPEvent<>*	m_onDestroyEvent;
 
@@ -49,7 +51,8 @@ public:
 		m_bIsActive(true),
 		m_bDontDestroy(false),
 		m_bDestroy(false),
-		m_bInit(false)
+		m_bInit(false),
+		m_bShadow(true)
 	{
 		m_onDestroyEvent = new CPPEvent<>;
 	}
@@ -61,6 +64,7 @@ public:
 	virtual void LateUpdateAll() = 0;
 	virtual void DrawAll() {}
 	virtual void LateDrawAll() {}
+	virtual void DrawShadow() {}
 
 #pragma region Operate
 	void ChangeOperate() {
@@ -105,6 +109,11 @@ public:
 	bool GetDestroy() { return m_bDestroy; }
 	virtual void OnDestroy() { m_onDestroyEvent->Invoke(); }
 	CPPEvent<>* GetOnDestroy() { return m_onDestroyEvent; }
+#pragma endregion
+
+#pragma region Shadow
+	void SetShadow(bool shadow) { m_bShadow = shadow; }
+	bool GetShadow() { return m_bShadow; }
 #pragma endregion
 
 #pragma endregion

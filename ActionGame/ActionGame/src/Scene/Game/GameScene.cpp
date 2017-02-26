@@ -95,6 +95,8 @@ bool GameScene::Init() {
 
 	GetShaderManager()->Create(SHADER_HALFLAMBERT);
 	GetShaderManager()->Create(SHADER_PHONG);
+	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
+	map->SetSize(Screen::GetWidth() / 2.0f, Screen::GetHeight() / 2.0f);
 	Toon* toon = (Toon*)GetShaderManager()->Create(SHADER_TOON);
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
@@ -174,6 +176,9 @@ void GameScene::SpriteCreate() {
 }
 
 
+/*									//
+//				•Ší¶¬			//
+//									*/
 void GameScene::WeaponCreate() {
 	Weapon* we;
 	we = new Weapon;
@@ -257,6 +262,7 @@ void GameScene::Draw() {
 	GetCameraManager()->Set("Main");
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	GetDrawManager()->CreateShadow();
 	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

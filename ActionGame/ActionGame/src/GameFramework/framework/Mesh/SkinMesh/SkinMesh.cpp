@@ -198,6 +198,16 @@ void SkinMesh::LateDraw(_shadertype type) {
 		}
 	}
 }
+void SkinMesh::DrawShadow() {
+	for (auto it = m_aInContainer.begin(); it != m_aInContainer.end(); ++it) {
+		MYMESHCONTAINER* pMeshContainer = (MYMESHCONTAINER*)(*it)->pMeshContainer;
+		while (pMeshContainer) {
+			DrawShadowContainer(pMeshContainer, (*it));
+
+			pMeshContainer = (MYMESHCONTAINER*)pMeshContainer->pNextMeshContainer;
+		}
+	}
+}
 
 
 /*									//
@@ -206,7 +216,6 @@ void SkinMesh::LateDraw(_shadertype type) {
 void SkinMesh::DrawFrame(_shadertype type) {
 	for (auto it = m_aInContainer.begin(); it != m_aInContainer.end(); ++it) {
 		MYMESHCONTAINER* pMeshContainer = (MYMESHCONTAINER*)(*it)->pMeshContainer;
-		// メッシュコンテナがある場合描画
 		while (pMeshContainer) {
 			//----- 描画タイプの選択
 			if (type == SHADER_NONE)
@@ -393,6 +402,58 @@ void SkinMesh::DrawShaderContainer(
 		}
 	}
 	pShader->End();
+}
+
+
+/*									//
+//			コンテナ内描画（影		//
+//									*/
+void SkinMesh::DrawShadowContainer(
+	MYMESHCONTAINER* pMeshContainer,
+	MYFRAME* pFrame)
+{
+	//----- シェーダ
+	IHlslDrawBase* pShader = (IHlslDrawBase*)GetShaderManager()->Get(SHADER_SHADOW);
+
+	// スキンメッシュ
+	if (pMeshContainer->pSkinInfo != NULL) {
+		// スキニング計算
+		for (DWORD i = 0; i < pMeshContainer->dwBoneNum; ++i) {
+			DWORD AttribID = pMeshContainer->pBoneComb[i].AttribId;
+
+			DWORD dwBlendMatrixNum = 0;
+			// 影響している行列数取得
+			for (DWORD k = 0; k < pMeshContainer->dwBoneWeight; ++k) {
+				UINT mtxIndex = pMeshContainer->pBoneComb[i].BoneId[k];
+				if (mtxIndex != UINT_MAX) {
+					// mStackにオフセット行列*ボーン合成行列を格納
+					Matrix mStack = pMeshContainer->pMtxBoneOffset[mtxIndex] * m_aTransform[mtxIndex]->GetWorld();
+					// 行列スタックに格納
+					pShader->SetWorldMatrix(&mStack, k);
+					// 現在影響を受けているボーンの数
+					++dwBlendMatrixNum;
+				}
+			}
+			pShader->SetMatrix();
+			// ジオメトリブレンディングを使用するために行列の個数を指定
+			pShader->SetBlendNum(dwBlendMatrixNum);
+
+			// パスの開始
+			pShader->BeginPass(1);
+			pMeshContainer->MeshData.pMesh->DrawSubset(i);
+			pShader->EndPass();	// パスの終了
+		}
+	} else {
+		// 通常メッシュ
+		pShader->SetWorldMatrix(&m_aTransform[pFrame->OffsetID]->GetWorld());
+		pShader->SetMatrix();
+		for (DWORD i = 0; i < pMeshContainer->NumMaterials; ++i) {
+			// パスの開始
+			pShader->BeginPass(0);
+			pMeshContainer->MeshData.pMesh->DrawSubset(i);					// 描画
+			pShader->EndPass();	// パスの終了
+		}
+	}
 }
 #pragma endregion
 #pragma endregion

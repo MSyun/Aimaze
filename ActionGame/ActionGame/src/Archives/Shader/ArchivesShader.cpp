@@ -49,6 +49,7 @@ void ArchivesShader::Create() {
 	Add("Phong", "data/SHADER/Phong.fx");
 	Add("Toon", "data/SHADER/Toon.fx");
 	Add("Wave", "data/SHADER/Wave.fx");
+	Add("ShadowMap", "data/SHADER/ShadowMap.fx");
 }
 
 

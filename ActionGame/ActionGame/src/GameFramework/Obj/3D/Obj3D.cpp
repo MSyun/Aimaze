@@ -117,6 +117,21 @@ void Obj3D::LateDrawAll() {
 		(*it)->GetGameObject()->LateDrawAll();
 	}
 }
+void Obj3D::DrawShadow() {
+	if (!GetActive() || !GetShadow())	return;
+
+	// ‰e‚Ì•`‰æ
+	if (m_pMesh) {
+		m_pMesh->DrawShadow();
+	} else {
+		// ŠÛ‰e
+	}
+
+	vector<Transform*>* childs = m_pTransform->GetChilds();
+	for (auto it = childs->begin(); it != childs->end(); ++it) {
+		(*it)->GetGameObject()->DrawShadow();
+	}
+}
 
 #pragma region Collider
 /*									//

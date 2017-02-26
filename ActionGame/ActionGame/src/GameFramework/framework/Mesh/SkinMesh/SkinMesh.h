@@ -66,10 +66,9 @@ public:
 	virtual void LateUpdate();
 
 	//----- 描画
-	virtual void Draw(
-		_shadertype type = SHADER_NONE);
-	virtual void LateDraw(
-		_shadertype type = SHADER_NONE);
+	virtual void Draw(_shadertype type = SHADER_NONE);
+	virtual void LateDraw(_shadertype type = SHADER_NONE);
+	virtual void DrawShadow();
 
 	//----- 解放
 	void Release();
@@ -119,6 +118,10 @@ protected:
 		MYMESHCONTAINER* pMeshContainer,
 		MYFRAME* pFrame,
 		_shadertype type);
+	// コンテナ（影
+	void DrawShadowContainer(
+		MYMESHCONTAINER* pMeshContainer,
+		MYFRAME* pFrame);
 #pragma endregion
 
 	// 対象のボーンを検索

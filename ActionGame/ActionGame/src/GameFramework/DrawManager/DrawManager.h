@@ -22,15 +22,15 @@ public:
 	void Draw();
 	void LateDraw();
 
+	// ‰eì¬
+	void CreateShadow();
+
 	// ’Šo
 	void Extract();
 
 	void SetList(Obj3DManagerBase* mana);
 
 protected:
-	// ‰eì¬
-	void CreateShadow();
-
 	// ‹‘ä
 	void CheckFrustum();
 

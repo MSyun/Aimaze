@@ -56,6 +56,10 @@ IHlslBase* ShaderManagerBase::Create(_shadertype type) {
 		hlsl = new ParallaxMapping;
 		break;
 
+	case SHADER_SHADOW:
+		hlsl = new ShadowMap;
+		break;
+
 	case SHADER_HALFLAMBERT:
 		hlsl = new HalfLambert;
 		break;

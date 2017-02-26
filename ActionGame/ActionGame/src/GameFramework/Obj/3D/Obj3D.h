@@ -54,6 +54,7 @@ public:
 	virtual void LateUpdateAll();
 	virtual void DrawAll();
 	virtual void LateDrawAll();
+	virtual void DrawShadow();
 
 	Transform* GetTransform() { return m_pTransform; }
 	Collider* GetCollider() { return m_pCollider; }
