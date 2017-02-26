@@ -30,6 +30,7 @@
 #include	"../../Pose/Pose.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
 #include	"../../GameFramework/DrawManager/DrawManager.h"
+#include	"../../Sword/Sword.h"
 
 /*									//
 //			コンストラクタ			//
@@ -95,8 +96,8 @@ bool GameScene::Init() {
 
 	GetShaderManager()->Create(SHADER_HALFLAMBERT);
 	GetShaderManager()->Create(SHADER_PHONG);
-	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
-	map->SetSize(Screen::GetWidth() / 2.0f, Screen::GetHeight() / 2.0f);
+//	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
+//	map->SetSize(Screen::GetWidth() / 2, Screen::GetHeight() / 2);
 	Toon* toon = (Toon*)GetShaderManager()->Create(SHADER_TOON);
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
@@ -181,27 +182,17 @@ void GameScene::SpriteCreate() {
 //									*/
 void GameScene::WeaponCreate() {
 	Weapon* we;
-	we = new Weapon;
-	we->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
-	//we->SetLife(10);
-	//we->SetAttack(4);
-	//we->SetWeaponType(WEAPON_SWORD);
+	we = new Sword;
 	we->GetTransform()->SetPos(-15.f, 3.f, 27.5f);
 	m_pItemBoxManager->RecordItem(we);
 
-	we = new Weapon;
+	we = new Sword;
 	we->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
-//	we->SetLife(10);
-//	we->SetAttack(2);
-//	we->SetWeaponType(WEAPON_SWORD);
 	we->GetTransform()->SetPos(50.f, 3.f, -88.f);
 	m_pItemBoxManager->RecordItem(we);
 
-	we = new Weapon;
+	we = new Sword;
 	we->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
-//	we->SetLife(10);
-//	we->SetAttack(8);
-//	we->SetWeaponType(WEAPON_SWORD);
 	we->GetTransform()->SetPos(25.f, 3.f, -40.f);
 	m_pItemBoxManager->RecordItem(we);
 }
@@ -237,7 +228,7 @@ void GameScene::Update() {
 	Debug::Print("Scene : Game\n");
 
 	// 一時的
-	if (Input::GetKeyTrigger(DIK_3)) {
+	if (Input::GetKeyTrigger(DIK_1)) {
 		GetSceneManagerWins()->ChangeCommand("Boss");
 	}
 	///////////
@@ -262,7 +253,7 @@ void GameScene::Draw() {
 	GetCameraManager()->Set("Main");
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	GetDrawManager()->CreateShadow();
+//	GetDrawManager()->CreateShadow();
 	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

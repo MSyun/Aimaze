@@ -247,7 +247,7 @@ void TitleScene::ChangeScene() {
 		break;
 
 	case MODE_OPTION:
-		GetSceneManagerWins()->PushCommand("Config");
+//		GetSceneManagerWins()->PushCommand("Config");
 		break;
 
 	case MODE_END:

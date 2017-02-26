@@ -128,6 +128,7 @@ void Pose::Open() {
 	m_bOpen = true;
 	if (m_pPlayer)
 		m_pPlayer->SetOperate(false);
+	m_pSelector->GetRectTransform()->SetPos(m_aMode[m_nSelect]->GetRectTransform()->GetPos());
 }
 
 
@@ -217,6 +218,7 @@ void Pose::Selection() {
 
 	case SELECT_DEBUG:
 		ChangeDrawCollider();
+		Debug::ChangeDraw();
 		break;
 
 	case SELECT_END:

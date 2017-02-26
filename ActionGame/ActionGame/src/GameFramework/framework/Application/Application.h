@@ -12,7 +12,10 @@ class	Application {
 public:
 #pragma region method
 
-	Application(int width = 600, int height = 480, bool bwnd = true);
+	Application(
+		int width = 600,
+		int height = 480,
+		bool bwnd = true);
 	virtual ~Application();
 
 	// é¿çs

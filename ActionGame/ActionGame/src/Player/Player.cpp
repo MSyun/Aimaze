@@ -239,11 +239,11 @@ void Player::AttackInput() {
 		m_pAnimator->SetBool("Weapon", false);
 		SetWeapon(NULL);
 	}
-	if (Input::GetKeyTrigger(GetContManager()->Get()->GetKeyNum(BUTTON_SANKAKU)) ||
-		Input::GetJoyTrigger(0, GetContManager()->Get()->GetJoyNum(BUTTON_SANKAKU))) {
-		SetWeapon(new Sword);
-		m_pAnimator->SetBool("Weapon", true);
-	}
+	//if (Input::GetKeyTrigger(GetContManager()->Get()->GetKeyNum(BUTTON_SANKAKU)) ||
+	//	Input::GetJoyTrigger(0, GetContManager()->Get()->GetJoyNum(BUTTON_SANKAKU))) {
+	//	SetWeapon(new Sword);
+	//	m_pAnimator->SetBool("Weapon", true);
+	//}
 }
 #pragma endregion
 

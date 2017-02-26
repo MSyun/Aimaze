@@ -34,6 +34,7 @@ private:
 	static D3DXFONT_DESC		m_D3DFD;	// フォント属性
 	static int					m_Block_x;	// 表示位置
 	static int					m_Block_y;
+	static bool					m_bDraw;
 
 #if	_UNICODE
 	static  wstring		str;		// デバッグ文字列保持バッファ（UNICODE用）
@@ -56,6 +57,15 @@ public:
 	static void SetDevice(IDirect3DDevice9* _dev) {
 		m_pDevice = _dev;
 		Create();
+	}
+
+	static void SetDraw(bool draw) {
+		m_bDraw = draw;
+		str = _T("");
+	}
+	static void ChangeDraw() {
+		m_bDraw ^= true;
+		str = _T("");
 	}
 
 #pragma region Print
@@ -117,11 +127,7 @@ public:
 
 	// 描画
 	static void Render() {
-#ifdef	_DEBUG
-		// BeginSceneテスト
-		bool IsBegin = false;
-		if (FAILED(m_pDevice->BeginScene()))
-			IsBegin = true;	// すでにBeginSceneが呼ばれている
+		if (!m_bDraw)	return;
 
 		// 現在蓄えられている文字列を描画
 		if (!m_pFont) {
@@ -137,10 +143,6 @@ public:
 
 		// 文字バッファをクリア
 		str = _T("");
-
-		if (!IsBegin)
-			m_pDevice->EndScene();
-#endif
 	}
 
 	// ログの表示
@@ -150,9 +152,11 @@ public:
 	}
 	// エラーログの表示
 	static void LogError(string message) {
+#ifdef _DEBUG
 		message = "Error : " + message;
 		Log(message);
 		DebugBreak();
+#endif // DEBUG
 	}
 
 	static HRESULT InvalidateDeviceObjects() {

@@ -25,7 +25,8 @@
 #include	"../../Pose/Pose.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
 #include	"../../GameFramework/DrawManager/DrawManager.h"
-
+#include	"../../GameFramework/framework/Input/Input.h"
+#include	"../../Sword/Sword.h"
 
 
 /*									//
@@ -88,6 +89,11 @@ bool BossScene::Init() {
 	m_pItemBoxManager->Create(10);
 	LoadRate(80);
 
+	Weapon* we;
+	we = new Sword;
+	we->GetTransform()->SetPos(0.0f, 3.0f, -50.0f);
+	m_pItemBoxManager->RecordItem(we);
+
 	GetShaderManager()->Create(SHADER_HALFLAMBERT);
 	GetShaderManager()->Create(SHADER_PHONG);
 	Toon* toon = (Toon*)GetShaderManager()->Create(SHADER_TOON);
@@ -147,6 +153,12 @@ void BossScene::EnemyCreate() {
 //									*/
 void BossScene::Update() {
 	Debug::Print("Scene : Boss\n");
+
+	// ˆêŽž“I
+	if (Input::GetKeyTrigger(DIK_1)) {
+		((Dragon*)GetObj3DManager()->Find("Dragon"))->Damage(30);
+	}
+	///////////
 
 	GetObj3DManager()->Update();
 	GetObj2DManager()->Update();

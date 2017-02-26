@@ -93,12 +93,12 @@ void Locus::Update() {
 			int num = i * (DIVIDE_NUM + 1) + n;
 
 			// 補完確認
-			if( m_bRevision ) {
+			if (m_bRevision) {
 				// 分割場所（0.0f ～ 1.0f)
 				float s = 1.0f / (DIVIDE_NUM + 1) * n;
 				// 座標補完
-				m_pStartVertex[num].Pos	= CatmullRom( m_vStart[p1].Pos, m_vStart[p2].Pos, m_vStart[p3].Pos, m_vStart[p4].Pos, s );
-				m_pEndVertex[num].Pos	= CatmullRom( m_vEnd[p1].Pos, m_vEnd[p2].Pos, m_vEnd[p3].Pos, m_vEnd[p4].Pos, s );
+				m_pStartVertex[num].Pos	= CatmullRom(m_vStart[p1].Pos, m_vStart[p2].Pos, m_vStart[p3].Pos, m_vStart[p4].Pos, s);
+				m_pEndVertex[num].Pos	= CatmullRom(m_vEnd[p1].Pos, m_vEnd[p2].Pos, m_vEnd[p3].Pos, m_vEnd[p4].Pos, s);
 				// テクスチャ座標補完
 				m_pStartVertex[num].Tex	= m_vStart[p2].Tex + (m_vStart[p3].Tex - m_vStart[p2].Tex) * s;
 				m_pEndVertex[num].Tex	= m_vEnd[p2].Tex + (m_vEnd[p3].Tex - m_vEnd[p2].Tex) * s;
@@ -119,9 +119,9 @@ void Locus::Update() {
 	m_pEndVertex[m_nVertexNum-1].Tex	= m_vEnd[NewNum].Tex;
 
 	// テクスチャ座標更新
-	for( int i = 0; i < SAVE_NUM; i ++ ) {
-		if( m_vStart[i].Tex.y > 0.0f )	m_vStart[i].Tex.y -= (1.0f / m_fGhostSpeed * delta);
-		if( m_vEnd[i].Tex.y > 0.0f )	m_vEnd[i].Tex.y -= (1.0f / m_fGhostSpeed * delta);
+	for (int i = 0; i < SAVE_NUM; i ++) {
+		if (m_vStart[i].Tex.y > 0.0f)	m_vStart[i].Tex.y -= (1.0f / m_fGhostSpeed * delta);
+		if (m_vEnd[i].Tex.y > 0.0f)		m_vEnd[i].Tex.y -= (1.0f / m_fGhostSpeed * delta);
 	}
 }
 
