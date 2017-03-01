@@ -24,15 +24,6 @@ LightManagerBase::LightManagerBase() :
 LightManagerBase::~LightManagerBase() {
 	if (!m_bHelper)		return;
 
-	map< string, Light* >::iterator p = m_MapLight.begin();
-
-	//----- ‘S—v‘fíœ
-	while (p != m_MapLight.end()) {
-		delete p->second;
-		p->second = NULL;
-		++p;
-	}
-
 	m_MapLight.clear();
 }
 

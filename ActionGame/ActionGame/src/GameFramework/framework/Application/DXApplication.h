@@ -13,13 +13,20 @@ class	DXApplication : public	Application {
 public:
 #pragma region method
 
-	DXApplication(int width = 600, int height = 480, bool bwnd = true);
+	DXApplication(
+		int width = 600,
+		int height = 480,
+		bool bwnd = true);
 	virtual ~DXApplication();
 
 	// DirectXのオブジェクトを設定
 	void RegistDXObj(IDXBase* _obj) { m_pDXObj = _obj; }
 
-	virtual LRESULT LocalWindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	virtual LRESULT LocalWindowProc(
+		HWND hWnd,
+		UINT msg,
+		WPARAM wParam,
+		LPARAM lParam);
 
 #pragma endregion
 

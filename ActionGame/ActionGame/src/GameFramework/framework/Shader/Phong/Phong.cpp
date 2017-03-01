@@ -62,8 +62,8 @@ HRESULT Phong::Load() {
 	//fxファイル内で宣言している変数のハンドルを取得する
 	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
 	m_hWorld = m_pEffect->GetParameterByName(NULL, "matWorld");
-	m_hView = m_pEffect->GetParameterByName(NULL, "matView");
-	m_hProj = m_pEffect->GetParameterByName(NULL, "matProj");
+	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matView");
+	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matProj");
 	m_hBlendNum = m_pEffect->GetParameterByName(NULL, "iBlendNum");
 	m_hTexture = m_pEffect->GetParameterByName(NULL, "tex");
 	m_hLightDir = m_pEffect->GetParameterByName(NULL, "vLightDir");
@@ -116,8 +116,8 @@ void Phong::SetMatrix() {
 
 		// ワールド × ビュー × 射影
 		m_pEffect->SetMatrixArray( m_hWorld, m_mtxWorld, 4 );
-		m_pEffect->SetMatrix( m_hView, &m_mtxView );
-		m_pEffect->SetMatrix( m_hProj, &m_mtxProj );
+		m_pEffect->SetMatrix( m_hCameraView, &m_mtxView );
+		m_pEffect->SetMatrix( m_hCameraProj, &m_mtxProj );
 
 		//カメラ位置
 		m1 = m_mtxWorld[0] * m_mtxView;

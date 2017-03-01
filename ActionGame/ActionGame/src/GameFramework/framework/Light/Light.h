@@ -2,12 +2,14 @@
 // 2016. 3.27	プログラム作成
 // 2016. 4.21	フォン用のスペキュラメンバ追加
 // 2016. 5.10	ライトの色を追加
+// 2017. 3. 1	Obj3Dを継承するように変更
 // author		SyunMizuno
 
 #pragma once
 
 
 #include	"../Convert.h"
+#include	"../../Obj/3D/Obj3D.h"
 
 
 /*
@@ -16,13 +18,11 @@
 */
 
 
-class	Light {
+class	Light	:	public	Obj3D {
 private:
 #pragma region variable
 
-	Point3	m_vPos;
-	Vector3	m_vLookAt;
-	Vector3	m_vUp;
+	float	m_fLookLength;
 	Matrix	m_mtxView;
 	Matrix	m_mtxProj;
 	float	m_fNear;	// ニアクリップ
@@ -38,10 +38,11 @@ public:
 #pragma region method
 
 	Light();
-	~Light();
+	virtual ~Light();
 	void Set(bool _custom = false);
-	void SetPos(Vector3* _pos) { m_vPos = *_pos; }
-	void SetLook(Vector3* _look) { m_vLookAt = *_look; }
+
+	void SetLookLength(float len) { m_fLookLength = len; }
+	void AddLookLength(float len) { m_fLookLength += len; }
 	void SetNear(float _near) { m_fNear = _near; }
 	void SetFar(float _far) { m_fFar = _far; }
 
@@ -49,13 +50,14 @@ public:
 	void SetColor(float col) { m_vColor.r = col; m_vColor.g = col; m_vColor.b = col; }
 	void SetColor(Color col) { m_vColor = col; }
 
-	Vector3 GetPos() { return m_vPos; }
-	Vector4 GetDir() { return Vector4(m_vLookAt.x - m_vPos.x, m_vLookAt.y - m_vPos.y, m_vLookAt.z - m_vPos.z, 0.f); }
+	Vector3 GetDirection3();
+	Vector4 GetDirection4();
+
 	Matrix GetView() { return m_mtxView; }
 	Matrix GetProj() { return m_mtxProj; }
 	void SetSpecular(float _specular) { m_fSpeclar = _specular; }
 	float GetSpecular() { return m_fSpeclar; }
-	D3DXCOLOR GetColor() { return m_vColor; }
+	Color GetColor() { return m_vColor; }
 
 #pragma endregion
 };

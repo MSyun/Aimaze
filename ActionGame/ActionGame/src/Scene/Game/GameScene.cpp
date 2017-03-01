@@ -66,14 +66,13 @@ bool GameScene::Init() {
 	// Player
 	obj = new Player;
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
-	obj->GetTransform()->SetPos(71.0f, 0.0f, -88.0f);
+//	obj->GetTransform()->SetPos(71.0f, 0.0f, -88.0f);
 	obj->GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
 	LoadRate(10);
 
 	// Stage
 	obj = new Obj3D;
 	obj->SetName("Stage");
-	obj->SetShaderType(SHADER_HALFLAMBERT);
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Stage")));
 	obj->SetTag(Archives::Tag("Stage"));
 	LoadRate(30);
@@ -96,11 +95,15 @@ bool GameScene::Init() {
 
 	GetShaderManager()->Create(SHADER_HALFLAMBERT);
 	GetShaderManager()->Create(SHADER_PHONG);
-//	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
-//	map->SetSize(Screen::GetWidth() / 2, Screen::GetHeight() / 2);
+	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
+	map->SetSize(Screen::GetWidth() / 2, Screen::GetHeight() / 2);
 	Toon* toon = (Toon*)GetShaderManager()->Create(SHADER_TOON);
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
+
+	Sprite* sprite = new Sprite;
+	sprite->SetTexture(map->GetShadowTex());
+	sprite->GetRectTransform()->SetPos(Screen::GetWidth() / 4, Screen::GetHeight() / 4, 0.0f);
 
 	// ƒTƒEƒ“ƒh
 	GetSoundManager()->Load(SOUND_BGM, Archives::Sound("Field").c_str(), "Field");
@@ -249,11 +252,11 @@ void GameScene::Update() {
 //									*/
 void GameScene::Draw() {
 	GetLightManager()->AllSet();
+	GetDrawManager()->CreateShadow();
 
 	GetCameraManager()->Set("Main");
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-//	GetDrawManager()->CreateShadow();
 	GetDrawManager()->Draw();
 
 	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

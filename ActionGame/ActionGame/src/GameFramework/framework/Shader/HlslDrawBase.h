@@ -1,5 +1,6 @@
 //	HLSL描画系統クラス
 // 2016. 7.19	プログラム作成
+// 2017. 2.28	影用メンバを追加
 // author		SyunMizuno
 
 #pragma once
@@ -15,12 +16,19 @@ protected:
 #pragma region variable
 
 	D3DXHANDLE	m_hWorld;
-	D3DXHANDLE	m_hView;
-	D3DXHANDLE	m_hProj;
+	D3DXHANDLE	m_hCameraView;
+	D3DXHANDLE	m_hCameraProj;
 	D3DXHANDLE	m_hBlendNum;
 	D3DXHANDLE	m_hTexture;
 	D3DXHANDLE	m_hLightDir;
 	D3DXHANDLE	m_hAmbient;
+
+	// 影類
+	D3DXHANDLE	m_hLightView;
+	D3DXHANDLE	m_hLightProj;
+	D3DXHANDLE	m_hBias;
+	D3DXHANDLE	m_hShadowMap;
+	D3DXHANDLE	m_hScaleBias;
 
 	Matrix		m_mtxWorld[4];
 	Matrix		m_mtxView;
@@ -43,6 +51,14 @@ public:
 	void SetWorldMatrix(const Matrix* world, int n = 0);
 	virtual void SetMatrix();
 	virtual void SetLight(const Vector4* pLightDir);
+	void SetCameraView(Matrix& view);
+	void SetCameraProj(Matrix& proj);
+
+	void SetLightView(Matrix& view);
+	void SetLightProj(Matrix& proj);
+	void SetBias(float bias);
+	void SetShadowMap(LPDIRECT3DTEXTURE9 shadow);
+	void SetScaleBias(Matrix& mat);
 
 	virtual void SetSpecular(float Specular) {}
 	virtual void SetSpecularPower(float SpecPow) {}

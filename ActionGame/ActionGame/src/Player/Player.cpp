@@ -31,7 +31,7 @@ Player::Player() :
 {
 	SetName("Player");
 	SetTag(Archives::Tag("Player"));
-	SetShaderType(_shadertype::SHADER_TOON);
+//	SetShaderType(_shadertype::SHADER_TOON);
 
 	// Info
 	m_pInfo = new PlayerInformation;

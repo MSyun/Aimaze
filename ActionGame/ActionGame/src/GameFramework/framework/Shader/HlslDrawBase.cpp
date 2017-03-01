@@ -6,6 +6,7 @@
 #include	"HlslDrawBase.h"
 #include	<tchar.h>
 #include	"../Graphic/Graphics.h"
+#include	"../Screen/Screen.h"
 
 
 /*									//
@@ -28,10 +29,22 @@ IHlslDrawBase::~IHlslDrawBase() {
 void IHlslDrawBase::Begin() {
 	if (IsOK()) {
 		LPDIRECT3DDEVICE9 pDevice = GetGraphics()->GetDevice();
-		pDevice->GetTransform(D3DTS_VIEW, &m_mtxView);
-		pDevice->GetTransform(D3DTS_PROJECTION, &m_mtxProj);
+		Matrix view, proj;
+		pDevice->GetTransform(D3DTS_VIEW, &view);
+		pDevice->GetTransform(D3DTS_PROJECTION, &proj);
+		SetCameraView(view);
+		SetCameraProj(proj);
 
 		m_pEffect->Begin(NULL, 0);
+
+		float fOffsetX = 0.5f + (0.5f / (float)Screen::GetWidth());
+		float fOffsetY = 0.5f + (0.5f / (float)Screen::GetHeight());
+		Matrix ScaleBias(
+			0.5f,		0.0f,		0.0f, 0.0f,
+			0.0f,		-0.5f,		0.0f, 0.0f,
+			0.0f,		0.0f,		0.0f, 0.0f,
+			fOffsetX,	fOffsetY,	0.0f, 1.0f);
+		SetScaleBias(ScaleBias);
 	}
 }
 
@@ -121,8 +134,8 @@ void IHlslDrawBase::SetMatrix() {
 	if (IsOK()) {
 		// ワールド × ビュー × 射影
 		m_pEffect->SetMatrixArray(m_hWorld, m_mtxWorld, 4);
-		m_pEffect->SetMatrix(m_hView, &m_mtxView);
-		m_pEffect->SetMatrix(m_hProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
+		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
 	}
 
 	// シェーダーが使用できないときは、固定機能パイプラインのマトリックスを設定する
@@ -139,4 +152,71 @@ void IHlslDrawBase::SetLight(const Vector4* pLightDir) {
 	Vector4 LightDir = *pLightDir;
 	D3DXVec3Normalize((Vector3*)&LightDir, (Vector3*)&LightDir);
 	m_pEffect->SetVector(m_hLightDir, &LightDir);
+}
+
+
+/*									//
+//		カメラのViewの設定			//
+//									*/
+void IHlslDrawBase::SetCameraView(Matrix& view) {
+	if (!IsOK())	return;
+
+	m_mtxView = view;
+}
+
+
+/*									//
+//		カメラのProjoctionの設定	//
+//									*/
+void IHlslDrawBase::SetCameraProj(Matrix& proj) {
+	if (!IsOK())	return;
+
+	m_mtxProj = proj;
+}
+
+
+/*									//
+//		ライトのViewの設定			//
+//									*/
+void IHlslDrawBase::SetLightView(Matrix& view) {
+	if (!IsOK())	return;
+
+	m_pEffect->SetMatrix(m_hLightView, &view);
+}
+
+
+/*									//
+//		ライトのProjectionの設定	//
+//									*/
+void IHlslDrawBase::SetLightProj(Matrix& proj) {
+	if (!IsOK())	return;
+
+	m_pEffect->SetMatrix(m_hLightProj, &proj);
+}
+
+
+/*									//
+//			バイアスの設定			//
+//									*/
+void IHlslDrawBase::SetBias(float bias) {
+	if (!IsOK())	return;
+
+	m_pEffect->SetFloat(m_hBias, bias);
+}
+
+
+/*									//
+//			影テクスチャの設定		//
+//									*/
+void IHlslDrawBase::SetShadowMap(LPDIRECT3DTEXTURE9 shadow) {
+	if (!IsOK())	return;
+	
+	m_pEffect->SetTexture(m_hShadowMap, shadow);
+}
+
+
+void IHlslDrawBase::SetScaleBias(Matrix& mat) {
+	if (!IsOK())	return;
+
+	m_pEffect->SetMatrix(m_hScaleBias, &mat);
 }

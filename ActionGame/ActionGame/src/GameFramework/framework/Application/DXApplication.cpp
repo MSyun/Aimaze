@@ -39,7 +39,7 @@ void DXApplication::PreMainWnd() {
 	int height = Screen::GetHeight();
 
 	m_cs.dwExStyle		= 0;
-	m_cs.lpszName		= _T("Aimaze");
+	m_cs.lpszName		= _T("DXBase");
 	m_cs.style			= !Screen::GetFullScreen() ? WS_OVERLAPPEDWINDOW | WS_VISIBLE : WS_POPUP | WS_VISIBLE;
 	m_cs.x				= rcRect.right / 2 - width / 2;
 	m_cs.y				= rcRect.bottom / 2 - height / 2;
