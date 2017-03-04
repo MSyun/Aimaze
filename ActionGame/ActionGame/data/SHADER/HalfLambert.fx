@@ -59,8 +59,8 @@ VS_OUTPUT VS(
 	float4x4 WLPB = WLP * matScaleBias;
 
 	// シャドウマップ
-	Out.ShadowMapUV = mul(Pos, WLPB);
-	Out.Depth = mul(Pos, WLP);
+	//Out.ShadowMapUV = mul(Pos, WLPB);
+	//Out.Depth = mul(Pos, WLP);
 
 	return Out;
 }
@@ -89,8 +89,8 @@ VS_OUTPUT VS_SKIN(
 	float4x4 WLPB = WLP * matScaleBias;
 
 	// シャドウマップ
-	Out.ShadowMapUV = mul(Pos, WLPB);
-	Out.Depth = mul(Pos, WLP);
+	//Out.ShadowMapUV = mul(Pos, WLPB);
+	//Out.Depth = mul(Pos, WLP);
 
 	return Out;
 }
@@ -112,7 +112,7 @@ float4 PS_pass0(VS_OUTPUT In) : COLOR
 	Col.w = 1.0f;
 
 
-	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+	//float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
 //	return (float4)shadow;
 //	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
@@ -138,7 +138,7 @@ float4 PS_pass1(VS_OUTPUT In) : COLOR
 
 	Col.w = 1.0f;
 
-	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+	//float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
 //	return (float4)shadow;
 //	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 

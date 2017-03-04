@@ -59,11 +59,21 @@ HRESULT ParallaxMapping::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	//fxファイル内で宣言している変数のハンドルを取得する
+	ConnectHandle();
+	m_pEffect->SetTechnique(m_hTechnique);
+
+	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void ParallaxMapping::ConnectHandle() {
 	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
 	m_hWorld = m_pEffect->GetParameterByName(NULL, "matWorld");
-	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matView");
-	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matProj");
+	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matCameraView");
+	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matCameraProj");
 	m_hBlendNum = m_pEffect->GetParameterByName(NULL, "iBlendNum");
 	m_hTexture = m_pEffect->GetParameterByName(NULL, "tex");
 	m_hLightDir = m_pEffect->GetParameterByName(NULL, "vLightDir");
@@ -73,10 +83,6 @@ HRESULT ParallaxMapping::Load() {
 	m_hSpecPow = m_pEffect->GetParameterByName(NULL, "SpecularPower");
 	m_hBumpTex = m_pEffect->GetParameterByName(NULL, "Bumptex");
 	m_hHLimit = m_pEffect->GetParameterByName(NULL, "fHLimit");
-
-	m_pEffect->SetTechnique(m_hTechnique);
-
-	return S_OK;
 }
 
 
@@ -107,8 +113,8 @@ void ParallaxMapping::SetMatrix() {
 	if (IsOK()) {
 		// ワールド × ビュー × 射影
 		m_pEffect->SetMatrixArray(m_hWorld, m_mtxWorld, 4);
-		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
-		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hCameraView, &m_mtxCameraView);
+		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxCameraProj);
 
 		//カメラ位置
 		m_pEffect->SetVector(m_hEyePos, &m_vPosCamera);

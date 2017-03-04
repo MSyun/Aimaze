@@ -11,6 +11,13 @@
 #include	"../../Graphic/Graphics.h"
 
 
+/*
+	memo	:
+			未実装
+			ボカシまで成功してます
+*/
+
+
 /*									//
 //			コンストラクタ			//
 //									*/
@@ -130,12 +137,19 @@ HRESULT CrossFilter::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	// fxファイル内で宣言している変数のハンドルを取得する
-	m_hTechnique = m_pEffect->GetTechniqueByName("tDownScale4x4");
+	ConnectHandle();
 
 	m_pEffect->SetTechnique(m_hTechnique);
 
 	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void CrossFilter::ConnectHandle() {
+	m_hTechnique = m_pEffect->GetTechniqueByName("tDownScale4x4");
 }
 
 

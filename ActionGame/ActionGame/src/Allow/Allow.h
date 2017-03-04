@@ -19,6 +19,8 @@ public:
 	virtual void OnCollisionTrigger(Obj3D* obj);
 
 protected:
+	// ‰Šú‰»
 	virtual void Init();
+	// XV
 	virtual void Update();
 };

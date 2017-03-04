@@ -133,8 +133,8 @@ void IHlslDrawBase::SetMatrix() {
 	if (IsOK()) {
 		// ƒ[ƒ‹ƒh ~ ƒrƒ…[ ~ ŽË‰e
 		m_pEffect->SetMatrixArray(m_hWorld, m_mtxWorld, 4);
-		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
-		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hCameraView, &m_mtxCameraView);
+		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxCameraProj);
 		m_pEffect->SetMatrix(m_hLightView, &m_mtxLightView);
 		m_pEffect->SetMatrix(m_hLightProj, &m_mtxLightProj);
 	}
@@ -162,7 +162,7 @@ void IHlslDrawBase::SetLight(const Vector4* pLightDir) {
 void IHlslDrawBase::SetCameraView(Matrix& view) {
 	if (!IsOK())	return;
 
-	m_mtxView = view;
+	m_mtxCameraView = view;
 }
 
 
@@ -172,7 +172,7 @@ void IHlslDrawBase::SetCameraView(Matrix& view) {
 void IHlslDrawBase::SetCameraProj(Matrix& proj) {
 	if (!IsOK())	return;
 
-	m_mtxProj = proj;
+	m_mtxCameraProj = proj;
 }
 
 

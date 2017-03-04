@@ -59,11 +59,21 @@ HRESULT Phong::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	//fxファイル内で宣言している変数のハンドルを取得する
+	ConnectHandle();
+	m_pEffect->SetTechnique(m_hTechnique);
+
+	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void Phong::ConnectHandle() {
 	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
 	m_hWorld = m_pEffect->GetParameterByName(NULL, "matWorld");
-	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matView");
-	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matProj");
+	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matCameraView");
+	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matCameraProj");
 	m_hBlendNum = m_pEffect->GetParameterByName(NULL, "iBlendNum");
 	m_hTexture = m_pEffect->GetParameterByName(NULL, "tex");
 	m_hLightDir = m_pEffect->GetParameterByName(NULL, "vLightDir");
@@ -78,10 +88,6 @@ HRESULT Phong::Load() {
 	m_hBias = m_pEffect->GetParameterByName(NULL, "fBias");
 	m_hScaleBias = m_pEffect->GetParameterByName(NULL, "matScaleBias");
 	m_hShadowMap = m_pEffect->GetParameterByName(NULL, "ShadowMap");
-
-	m_pEffect->SetTechnique(m_hTechnique);
-
-	return S_OK;
 }
 
 
@@ -122,13 +128,13 @@ void Phong::SetMatrix() {
 
 		// ワールド × ビュー × 射影
 		m_pEffect->SetMatrixArray( m_hWorld, m_mtxWorld, 4 );
-		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
-		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hCameraView, &m_mtxCameraView);
+		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxCameraProj);
 		m_pEffect->SetMatrix(m_hLightView, &m_mtxLightView);
 		m_pEffect->SetMatrix(m_hLightProj, &m_mtxLightProj);
 
 		//カメラ位置
-		m1 = m_mtxWorld[0] * m_mtxView;
+		m1 = m_mtxWorld[0] * m_mtxCameraView;
 		D3DXMatrixInverse( &m1, NULL, &m1 );
 		D3DXVec4Transform( &v, &m_vPosCamera, &m1 );
 		m_pEffect->SetVector( m_hEyePos, &v );

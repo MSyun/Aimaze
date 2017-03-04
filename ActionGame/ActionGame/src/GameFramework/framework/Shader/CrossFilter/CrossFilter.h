@@ -108,5 +108,8 @@ protected:
 	// 描画元、先の大きさから、テクスチャ座標を補正する
 	void DrawFullScreenQuad(float fLeftU, float fTopV, float fRightU, float fBottomV);
 
+	// ハンドルの接続
+	virtual void ConnectHandle();
+
 #pragma endregion
 };

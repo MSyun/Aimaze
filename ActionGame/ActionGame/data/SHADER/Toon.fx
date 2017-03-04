@@ -81,22 +81,19 @@ VS_OUTPUT VS (
 	Out.Normal = normalize(Normal);
 
 	//----- テクスチャのY座標の算出(これをエッジ座標として使用)
-	// 頂点座標をワールドビュー変換する
-	float3 wv_pos = normalize(mul(position, matView));
-
-	// 法線ベクトルをワールドビュー変換する
-	float3 wv_normal = normalize(mul(Normal, matView));
+	float3 wv_pos = normalize(mul(position, matCameraView));
+	float3 wv_normal = normalize(mul(Normal, matCameraView));
 
 	// 2つのベクトルの内積を0.0～から1.0の値にしてV座標にする
 	Out.ToonUV.y = dot(wv_pos, wv_normal) * 0.5 + 0.5;
 
 
-	float4x4 WLP = CreateLightWVP(World);
-	float4x4 WLPB = WLP * matScaleBias;
+	//float4x4 WLP = CreateLightWVP(World);
+	//float4x4 WLPB = WLP * matScaleBias;
 
-	// シャドウマップ
-	Out.ShadowMapUV = mul(Pos, WLPB);
-	Out.Depth = mul(Pos, WLP);
+	//// シャドウマップ
+	//Out.ShadowMapUV = mul(Pos, WLPB);
+	//Out.Depth = mul(Pos, WLP);
 
 	return Out;
 }
@@ -125,22 +122,19 @@ VS_OUTPUT VS_SKIN (
 	Out.Normal = normalize(Normal);
 
 	//----- テクスチャのY座標の算出(これをエッジ座標として使用)
-	// 頂点座標をワールドビュー変換する
-	float3 wv_pos = normalize(mul(position, matView));
-
-	// 法線ベクトルをワールドビュー変換する
-	float3 wv_normal = normalize(mul(Normal, matView));
+	float3 wv_pos = normalize(mul(position, matCameraView));
+	float3 wv_normal = normalize(mul(Normal, matCameraView));
 
 	// 2つのベクトルの内積を0.0～から1.0の値にしてV座標にする
 	Out.ToonUV.y = dot(wv_pos, wv_normal) * 0.5 + 0.5;
 
 
-	float4x4 WLP = CreateLightWVP(World);
-	float4x4 WLPB = WLP * matScaleBias;
+	//float4x4 WLP = CreateLightWVP(World);
+	//float4x4 WLPB = WLP * matScaleBias;
 
-	// シャドウマップ
-	Out.ShadowMapUV = mul(Pos, WLPB);
-	Out.Depth = mul(Pos, WLP);
+	//// シャドウマップ
+	//Out.ShadowMapUV = mul(Pos, WLPB);
+	//Out.Depth = mul(Pos, WLP);
 
 	return Out;
 }
@@ -164,7 +158,7 @@ float4 PS_pass0 ( VS_OUTPUT	In )	:	COLOR
 	float4 Col = tex2D(ToonSmp, float2(p.x, In.ToonUV.y));
 
 
-	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+	//float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
 //	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
 	return tex2D(TexSamp, In.Tex) * Col * vColor;
@@ -188,7 +182,7 @@ float4 PS_pass1(VS_OUTPUT In)	:	COLOR
 	float4 Col = tex2D(ToonSmp, float2(p.x, In.ToonUV.y));
 
 
-	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+	//float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
 //	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
 	return Col * vColor;

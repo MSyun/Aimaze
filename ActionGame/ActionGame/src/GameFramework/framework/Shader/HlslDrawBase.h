@@ -31,8 +31,8 @@ protected:
 	D3DXHANDLE	m_hScaleBias;
 
 	Matrix		m_mtxWorld[4];
-	Matrix		m_mtxView;
-	Matrix		m_mtxProj;
+	Matrix		m_mtxCameraView;
+	Matrix		m_mtxCameraProj;
 
 	// ‰e—p
 	Matrix		m_mtxLightView;

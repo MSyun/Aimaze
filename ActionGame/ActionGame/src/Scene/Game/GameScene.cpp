@@ -14,23 +14,18 @@
 #include	"../../GameFramework/framework/Texture/TexManager.h"
 #include	"../../GameFramework/framework/Light/LightManager.h"
 #include	"../../Archives/Archives.h"
-#include	"../../Player/Player.h"
-#include	"../../Wizard/Wizard.h"
-#include	"../../Wolf/Wolf.h"
+#include	"../../Weapon/Weapon.h"
 #include	"../../Animator/PlayerAnimator.h"
 #include	"../../GameFramework/framework/Utility/System/SystemUtility.h"
-#include	"../../CameraControll/CameraControll.h"
 #include	"../../Mission/Mission.h"
 #include	"../../GameFramework/framework/Screen/Screen.h"
 #include	"../../GameStart/GameStart.h"
-#include	"../../Allow/Allow.h"
 #include	"../../GameFramework/framework/Sound/SoundManager.h"
 
 #include	"../../GameFramework/framework/Input/Input.h"
-#include	"../../Pose/Pose.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
 #include	"../../GameFramework/DrawManager/DrawManager.h"
-#include	"../../Sword/Sword.h"
+#include	"../../Factory/Factory.h"
 
 /*									//
 //			コンストラクタ			//
@@ -64,14 +59,14 @@ bool GameScene::Init() {
 
 	Obj3D* obj;
 	// Player
-	obj = new Player;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_PLAYER);
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
 	obj->GetTransform()->SetPos(0.0f, 0.0f, 0.0f);
 	obj->GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
 	LoadRate(10);
 
 	// Stage
-	obj = new Obj3D;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_3D);
 	obj->SetName("Stage");
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Stage")));
 	obj->SetTag(Archives::Tag("Stage"));
@@ -79,7 +74,7 @@ bool GameScene::Init() {
 	LoadRate(30);
 
 	// CameraControll
-	obj = new CameraControll;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_CAMERACONTROLL);
 	GetCameraManager()->Get("Main")->GetTransform()->SetParent(obj->GetTransform());
 	obj->GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
 
@@ -102,9 +97,9 @@ bool GameScene::Init() {
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
 
-	Sprite* sprite = new Sprite;
-	sprite->SetTexture(map->GetShadowTex());
-	sprite->GetRectTransform()->SetPos(Screen::GetWidth() / 5.0f, Screen::GetHeight() / 5.0f, 0.0f);
+	//Sprite* sprite = new Sprite;
+	//sprite->SetTexture(map->GetShadowTex());
+	//sprite->GetRectTransform()->SetPos(Screen::GetWidth() / 5.0f, Screen::GetHeight() / 5.0f, 0.0f);
 
 	// サウンド
 	GetSoundManager()->Load(SOUND_BGM, Archives::Sound("Field").c_str(), "Field");
@@ -129,17 +124,17 @@ void GameScene::LoadRate(int rate) {
 void GameScene::EnemyCreate() {
 	Obj3D* obj;
 
-	obj = new Wizard(10);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_WIZARD, 10);
 	obj->GetTransform()->SetPos(-16.0f, 0.0f, 5.0f);
-	new Allow;
+	Factory::Create(GAME_OBJ_ALLOW);
 
-	obj = new Wolf(10);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_WOLF, 10);
 	obj->GetTransform()->SetPos(20.0f, 0.0f, -88.5f);
-	obj = new Wolf(10);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_WOLF, 10);
 	obj->GetTransform()->SetPos(76.5f, 0.0f, -35.0f);
-	obj = new Wolf(10);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_WOLF, 10);
 	obj->GetTransform()->SetPos(75.5f, 0.0f, 87.5f);
-	obj = new Wolf(10);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_WOLF, 10);
 	obj->GetTransform()->SetPos(16.0f, 0.0f, 82.0f);
 }
 
@@ -150,7 +145,7 @@ void GameScene::EnemyCreate() {
 void GameScene::SpriteCreate() {
 	Vector2 size((float)Screen::GetWidth(), (float)Screen::GetHeight());
 	// Start
-	GameStart* sprite = new GameStart;
+	GameStart* sprite = (GameStart*)Factory::Create(GAME_OBJ_GAMESTART);
 	sprite->SetChangeTime(1.0f);
 	sprite->SetTexture(GetTexManager()->Get(Archives::Texture("Start")));
 	sprite->GetOnEndPlayReverse()->AddListener([=]() {
@@ -160,12 +155,12 @@ void GameScene::SpriteCreate() {
 		obj = GetObj3DManager()->Find("CameraControll");
 		if (obj)
 			obj->SetOperate(true);
-		new Pose;
+		Factory::Create(GAME_OBJ_POSE);
 	});
 
 	// Mission
 	Mission* mission;
-	mission = new Mission;
+	mission = (Mission*)Factory::Create(GAME_OBJ_MISSION);
 	mission->SetChangeTime(0.5f);
 	mission->SetTexture(GetTexManager()->Get(Archives::Texture("Mission")));
 	mission->GetRectTransform()->SetPos(size.x / 2.0f, size.y / 2.0f, 0.0f);
@@ -186,15 +181,15 @@ void GameScene::SpriteCreate() {
 //									*/
 void GameScene::WeaponCreate() {
 	Weapon* we;
-	we = new Sword;
+	we = (Weapon*)Factory::Create(GAME_OBJ_SWORD);
 	we->GetTransform()->SetPos(-15.f, 3.f, 27.5f);
 	m_pItemBoxManager->RecordItem(we);
 
-	we = new Sword;
+	we = (Weapon*)Factory::Create(GAME_OBJ_SWORD);
 	we->GetTransform()->SetPos(50.f, 3.f, -88.f);
 	m_pItemBoxManager->RecordItem(we);
 
-	we = new Sword;
+	we = (Weapon*)Factory::Create(GAME_OBJ_SWORD);
 	we->GetTransform()->SetPos(25.f, 3.f, -40.f);
 	m_pItemBoxManager->RecordItem(we);
 }
@@ -209,6 +204,8 @@ void GameScene::Release() {
 
 	//GetShaderManager()->Delete(SHADER_HALFLAMBERT);
 	//GetShaderManager()->Delete(SHADER_TOON);
+
+	GetLightManager()->Delete("Directional");
 
 	GetCameraManager()->Delete("Main");
 
@@ -251,7 +248,7 @@ void GameScene::Update() {
 //									*/
 void GameScene::Draw() {
 	GetLightManager()->AllSet();
-	GetDrawManager()->CreateShadow();
+	//GetDrawManager()->CreateShadow();
 
 	GetCameraManager()->Set("Main");
 

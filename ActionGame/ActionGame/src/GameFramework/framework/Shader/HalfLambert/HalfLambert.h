@@ -23,4 +23,8 @@ public:
 	virtual HRESULT Load();
 
 #pragma endregion
+
+protected:
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
 };

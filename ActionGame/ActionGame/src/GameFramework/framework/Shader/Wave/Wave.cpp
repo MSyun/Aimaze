@@ -174,17 +174,23 @@ HRESULT Wave::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	// ハンドルを取得
+	ConnectHandle();
+	m_pEffect->SetTechnique(m_hTechnique);
+
+	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void Wave::ConnectHandle() {
 	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
 	m_hTexOffset = m_pEffect->GetParameterByName(NULL, "TexOffset");
 	m_hSpringPower = m_pEffect->GetParameterByName(NULL, "SpringPower");
 	m_hAddWavePos = m_pEffect->GetParameterByName(NULL, "AddWavePos");
 	m_hAddWaveHeight = m_pEffect->GetParameterByName(NULL, "AddWaveHeight");
 	m_hWaveTex = m_pEffect->GetParameterByName(NULL, "tex");
-
-	m_pEffect->SetTechnique(m_hTechnique);
-
-	return S_OK;
 }
 
 

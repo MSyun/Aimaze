@@ -9,7 +9,7 @@
 #include	"../GameFramework/framework/Time/Time.h"
 #include	"../Animator/PlayerAnimator.h"
 #include	"../Archives/Archives.h"
-#include	"../Sword/Sword.h"
+#include	"../Weapon/Sword/Sword.h"
 #include	"../GameFramework/framework/Texture/TexManager.h"
 #include	"../GameFramework/framework/Utility/System/SystemUtility.h"
 #include	"../ItemBox/ItemBox.h"

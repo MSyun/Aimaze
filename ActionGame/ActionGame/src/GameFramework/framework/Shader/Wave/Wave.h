@@ -49,5 +49,8 @@ public:
 
 	LPDIRECT3DTEXTURE9 Render();
 
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
+
 #pragma endregion
 };

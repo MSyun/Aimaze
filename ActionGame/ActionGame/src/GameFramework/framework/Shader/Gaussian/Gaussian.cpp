@@ -127,10 +127,7 @@ HRESULT Gaussian::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	// ハンドルを取得
-	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
-	m_hWeight = m_pEffect->GetParameterByName(NULL, "weight");
-	m_hSrcMap = m_pEffect->GetParameterByName(NULL, "SrcMap");
+	ConnectHandle();
 
 	// 重みの設定
 	this->UpdateWeight(m_fDispersion_sq*m_fDispersion_sq);
@@ -138,6 +135,16 @@ HRESULT Gaussian::Load() {
 	m_pEffect->SetTechnique(m_hTechnique);
 
 	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void Gaussian::ConnectHandle() {
+	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
+	m_hWeight = m_pEffect->GetParameterByName(NULL, "weight");
+	m_hSrcMap = m_pEffect->GetParameterByName(NULL, "SrcMap");
 }
 
 

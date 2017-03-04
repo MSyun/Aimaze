@@ -38,5 +38,8 @@ public:
 	virtual void SetCamera(const Vector4* pCameraPos);
 	virtual void SetCamera(const Vector3* pCameraPos);
 
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
+
 #pragma endregion
 };

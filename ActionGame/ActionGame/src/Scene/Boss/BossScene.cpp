@@ -15,18 +15,16 @@
 #include	"../../GameFramework/framework/Texture/TexManager.h"
 #include	"../../GameFramework/framework/Light/LightManager.h"
 #include	"../../Archives/Archives.h"
-#include	"../../Player/Player.h"
-#include	"../../Dragon/Dragon.h"
+#include	"../../Enemy/Dragon/Dragon.h"
 
 #include	"../../Animator/PlayerAnimator.h"
 #include	"../../Animator/DragonAnimator.h"
 #include	"../../GameFramework/framework/Utility/System/SystemUtility.h"
-#include	"../../CameraControll/CameraControll.h"
-#include	"../../Pose/Pose.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
 #include	"../../GameFramework/DrawManager/DrawManager.h"
 #include	"../../GameFramework/framework/Input/Input.h"
-#include	"../../Sword/Sword.h"
+#include	"../../Weapon/Weapon.h"
+#include	"../../Factory/Factory.h"
 
 
 /*									//
@@ -61,14 +59,14 @@ bool BossScene::Init() {
 
 	Obj3D* obj;
 	// Player
-	obj = new Player;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_PLAYER);
 	obj->ChangeOperate();
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
 	obj->GetTransform()->SetPos(0.0f, 0.0f, -60.0f);
 	LoadRate(10);
 
 	// Stage
-	obj = new Obj3D;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_3D);
 	obj->SetName("Stage");
 	obj->SetShaderType(SHADER_HALFLAMBERT);
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Land")));
@@ -77,7 +75,7 @@ bool BossScene::Init() {
 	LoadRate(30);
 
 	// CameraControll
-	obj = new CameraControll;
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_CAMERACONTROLL);
 	camera->GetTransform()->SetParent(obj->GetTransform());
 	obj->ChangeOperate();
 	obj->GetTransform()->Rotate(0.0f, 0.0f, 0.0f);
@@ -90,7 +88,7 @@ bool BossScene::Init() {
 	LoadRate(80);
 
 	Weapon* we;
-	we = new Sword;
+	we = (Weapon*)Factory::Create(GAME_OBJ_SWORD);
 	we->GetTransform()->SetPos(0.0f, 3.0f, -50.0f);
 	m_pItemBoxManager->RecordItem(we);
 
@@ -100,7 +98,7 @@ bool BossScene::Init() {
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
 
-	new Pose;
+	Factory::Create(GAME_OBJ_POSE);
 
 	return true;
 }
@@ -143,7 +141,7 @@ void BossScene::LoadRate(int rate) {
 void BossScene::EnemyCreate() {
 	Obj3D* obj;
 
-	obj = new Dragon(30);
+	obj = (Obj3D*)Factory::Create(GAME_OBJ_DRAGON, 30);
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Dragon")), new DragonAnimator);
 }
 

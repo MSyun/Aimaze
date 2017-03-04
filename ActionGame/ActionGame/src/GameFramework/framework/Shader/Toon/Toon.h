@@ -24,4 +24,7 @@ public:
 	virtual HRESULT Load();
 	void SetToonMap(LPDIRECT3DTEXTURE9 pTex);
 	virtual void Begin();
+
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
 };

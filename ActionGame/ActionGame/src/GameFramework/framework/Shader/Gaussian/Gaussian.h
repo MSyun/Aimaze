@@ -73,5 +73,8 @@ protected:
 	// テクスチャ・サーフェスの作成
 	HRESULT CreateRenderTarget();
 
+	// ハンドルの接続
+	virtual void ConnectHandle();
+
 #pragma endregion
 };

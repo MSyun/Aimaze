@@ -324,14 +324,14 @@ void SkinMesh::DrawShaderContainer(
 	// ここは後で修正
 	Light* light = GetLightManager()->Get("Directional");
 	pShader->SetLight(&light->GetDirection4());
-	pShader->SetLightView(light->GetView());
-	pShader->SetLightProj(light->GetProj());
-	ShadowMap* shadow = (ShadowMap*)GetShaderManager()->Get(SHADER_SHADOW);
-	pShader->SetShadowMap(shadow->GetShadowTex());
+	//pShader->SetLightView(light->GetView());
+	//pShader->SetLightProj(light->GetProj());
+	//ShadowMap* shadow = (ShadowMap*)GetShaderManager()->Get(SHADER_SHADOW);
+	//pShader->SetShadowMap(shadow->GetShadowTex());
 	//////////////////////////////////////
 
 	pShader->SetCamera(&GetCameraManager()->CurrentCamera()->GetTransform()->GetPos());
-	pShader->SetSpecular(GetLightManager()->Get("Directional")->GetSpecular());
+	pShader->SetSpecular(light->GetSpecular());
 
 	// スキンメッシュ
 	if (pMeshContainer->pSkinInfo != NULL) {

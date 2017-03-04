@@ -40,8 +40,6 @@ Light::~Light() {
 //				更新				//
 //									*/
 void Light::Set(bool _custom) {
-	Transform* transform = GetTransform();
-	Point3 pos = transform->GetPos();
 	CreateView();
 	CreateProj();
 
@@ -60,26 +58,12 @@ void Light::Set(bool _custom) {
 		GetGraphics()->GetDevice()->SetRenderState(D3DRS_AMBIENT, 0x00444444);	// 数値が高いほど明るい
 	} else
 		GetGraphics()->GetDevice()->LightEnable(0, FALSE);
-
-
-	Debug::Print("\nライト座標 :");
-	Debug::Print("X座標　：");
-	Debug::Print(m_pTransform->GetPos().x);
-	Debug::Print("Y座標　：");
-	Debug::Print(m_pTransform->GetPos().y);
-	Debug::Print("Z座標　：");
-	Debug::Print(m_pTransform->GetPos().z);
-
-	Point3 point = m_pTransform->GetPos() + GetDirection3();
-	Debug::Print("\nライト注視点 :");
-	Debug::Print("X座標　：");
-	Debug::Print(point.x);
-	Debug::Print("Y座標　：");
-	Debug::Print(point.y);
-	Debug::Print("Z座標　：");
-	Debug::Print(point.z);
 }
 
+
+/*									//
+//			ビュー行列作成			//
+//									*/
 void Light::CreateView() {
 	Transform* trans = GetTransform();
 	Point3 Pos = trans->GetPos();
@@ -91,6 +75,9 @@ void Light::CreateView() {
 }
 
 
+/*									//
+//		プロジェクション行列作成	//
+//									*/
 void Light::CreateProj() {
 	D3DXMatrixPerspectiveFovLH(
 		&m_mtxProj,
@@ -101,10 +88,12 @@ void Light::CreateProj() {
 }
 
 
+/*									//
+//			注視点までの向き		//
+//									*/
 Vector3 Light::GetDirection3() {
 	return GetTransform()->GetForward() * m_fLookLength;
 }
-
 
 Vector4 Light::GetDirection4() {
 	Vector3 forward = GetTransform()->GetForward() * m_fLookLength;

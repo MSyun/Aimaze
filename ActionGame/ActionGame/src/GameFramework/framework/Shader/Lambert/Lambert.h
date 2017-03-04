@@ -18,4 +18,8 @@ public:
 	Lambert();
 	virtual ~Lambert();
 	virtual HRESULT Load();
+
+protected:
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
 };

@@ -1,0 +1,52 @@
+//	ファクトリークラス
+// 2017. 3. 4	プログラム作成
+// author		SyunMizuno
+
+
+#pragma once
+
+
+#include	"../GameFramework/Obj/Obj.h"
+
+
+typedef	enum {
+	GAME_OBJ_3D = 0,
+	GAME_OBJ_ALLOW,
+	GAME_OBJ_BREATH,
+	GAME_OBJ_FLAME,
+	GAME_OBJ_MAGIC,
+	GAME_OBJ_RUSH,
+	GAME_OBJ_STAMP,
+	GAME_OBJ_CAMERACONTROLL,
+	GAME_OBJ_BOSSINFORMATION,
+	GAME_OBJ_DRAGON,
+	GAME_OBJ_WIZARD,
+	GAME_OBJ_WOLF,
+	GAME_OBJ_PLAYERINFORMATION,
+	GAME_OBJ_PLAYER,
+	GAME_OBJ_GAMECLEAR,
+	GAME_OBJ_GAMEOVER,
+	GAME_OBJ_GAMESTART,
+	GAME_OBJ_GAUGE2D,
+	GAME_OBJ_GAUGE3D,
+	GAME_OBJ_ITEMBOX,
+	GAME_OBJ_LIFEBERONHEAD,
+	GAME_OBJ_POSE,
+	GAME_OBJ_RING,
+	GAME_OBJ_STICK,
+	GAME_OBJ_SWORD,
+	GAME_OBJ_MISSION,
+
+	GAME_OBJ_MAX
+} _GAME_OBJ_FACTORY;
+
+class Factory {
+public:
+	Factory() {}
+	virtual ~Factory() {}
+
+	static IObj* Create(_GAME_OBJ_FACTORY type, int val = 10);
+
+private:
+
+};

@@ -1,19 +1,24 @@
 float4x4 matWorld[4]	:	WORLD;		// ワールド変換行列配列
-float4x4 matView		:	VIEW;		// ビュー変換行列
-float4x4 matProj		:	PROJECTION;	// 射影変換行列
+float4x4 matCameraView	:	VIEW;		// ビュー変換行列
+float4x4 matCameraProj	:	PROJECTION;	// 射影変換行列
 
 int iBlendNum;							// ブレンドする配列の数
 
 
+
+// 座標にワールド、ビュー、プロジェクションを適用
+//
 float4 PosCreator(float4 Pos, float4x4 World) {
 	float4 position;
 	position = mul(Pos, World);
-	position = mul(position, matView);
-	position = mul(position, matProj);
+	position = mul(position, matCameraView);
+	position = mul(position, matCameraProj);
 	return position;
 }
 
 
+// ウェイトからワールド行列を抽出
+//
 float4x4 SkinWorldCreator(float4 W) {
 	float		Weight[4] = (float[4])W;	// 重みをfloatに分割
 	float		LastBlendWeight = 0.0f;		// 最後の行列に掛けられる重み

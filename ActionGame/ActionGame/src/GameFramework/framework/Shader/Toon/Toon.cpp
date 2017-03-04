@@ -61,11 +61,21 @@ HRESULT Toon::Load() {
 	}
 	SAFE_RELEASE(pErr);
 
-	//fxファイル内で宣言している変数のハンドルを取得する
+	ConnectHandle();
+	m_pEffect->SetTechnique(m_hTechnique);
+
+	return S_OK;
+}
+
+
+/*									//
+//			ハンドルの接続			//
+//									*/
+void Toon::ConnectHandle() {
 	m_hTechnique = m_pEffect->GetTechniqueByName("TShader");
 	m_hWorld = m_pEffect->GetParameterByName(NULL, "matWorld");
-	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matView");
-	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matProj");
+	m_hCameraView = m_pEffect->GetParameterByName(NULL, "matCameraView");
+	m_hCameraProj = m_pEffect->GetParameterByName(NULL, "matCameraProj");
 	m_hBlendNum = m_pEffect->GetParameterByName(NULL, "iBlendNum");
 	m_hLightDir = m_pEffect->GetParameterByName(NULL, "vLightDir");
 	m_hAmbient = m_pEffect->GetParameterByName(NULL, "vColor");
@@ -77,10 +87,6 @@ HRESULT Toon::Load() {
 	m_hBias = m_pEffect->GetParameterByName(NULL, "fBias");
 	m_hScaleBias = m_pEffect->GetParameterByName(NULL, "matScaleBias");
 	m_hShadowMap = m_pEffect->GetParameterByName(NULL, "ShadowMap");
-
-	m_pEffect->SetTechnique(m_hTechnique);
-
-	return S_OK;
 }
 
 

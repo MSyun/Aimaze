@@ -36,4 +36,7 @@ public:
 	void SetCamera(const Vector3* pCameraPos);
 
 	virtual void SetLight(const Vector4* pLightDir);
+
+	// ƒnƒ“ƒhƒ‹‚ÌÚ‘±
+	virtual void ConnectHandle();
 };

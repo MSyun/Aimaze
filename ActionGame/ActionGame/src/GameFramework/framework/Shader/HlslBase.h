@@ -39,5 +39,8 @@ protected:
 	// 使用確認
 	bool IsOK();
 
+	// ハンドルの接続
+	virtual void ConnectHandle() {}
+
 #pragma endregion
 };
