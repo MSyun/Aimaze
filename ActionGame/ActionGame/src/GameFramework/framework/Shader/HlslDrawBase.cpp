@@ -7,6 +7,7 @@
 #include	<tchar.h>
 #include	"../Graphic/Graphics.h"
 #include	"../Screen/Screen.h"
+#include	"../Camera/CameraManager.h"
 
 
 /*									//
@@ -27,25 +28,23 @@ IHlslDrawBase::~IHlslDrawBase() {
 //		シェーダー処理開始			//
 //									*/
 void IHlslDrawBase::Begin() {
-	if (IsOK()) {
-		LPDIRECT3DDEVICE9 pDevice = GetGraphics()->GetDevice();
-		Matrix view, proj;
-		pDevice->GetTransform(D3DTS_VIEW, &view);
-		pDevice->GetTransform(D3DTS_PROJECTION, &proj);
-		SetCameraView(view);
-		SetCameraProj(proj);
+	if (!IsOK())	return;
 
-		m_pEffect->Begin(NULL, 0);
+	LPDIRECT3DDEVICE9 pDevice = GetGraphics()->GetDevice();
+	Camera* camera = GetCameraManager()->CurrentCamera();
+	SetCameraView(camera->GetView());
+	SetCameraProj(camera->GetProj());
 
-		float fOffsetX = 0.5f + (0.5f / (float)Screen::GetWidth());
-		float fOffsetY = 0.5f + (0.5f / (float)Screen::GetHeight());
-		Matrix ScaleBias(
-			0.5f,		0.0f,		0.0f, 0.0f,
-			0.0f,		-0.5f,		0.0f, 0.0f,
-			0.0f,		0.0f,		0.0f, 0.0f,
-			fOffsetX,	fOffsetY,	0.0f, 1.0f);
-		SetScaleBias(ScaleBias);
-	}
+	m_pEffect->Begin(NULL, 0);
+
+	float fOffsetX = 0.5f + (0.5f / ((float)Screen::GetWidth() / 3.0f));
+	float fOffsetY = 0.5f + (0.5f / ((float)Screen::GetHeight() / 3.0f));
+	Matrix ScaleBias(
+		0.5f, 0.0f, 0.0f, 0.0f,
+		0.0f, -0.5f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
+		fOffsetX, fOffsetY, 0.0f, 1.0f);
+	SetScaleBias(ScaleBias);
 }
 
 
@@ -136,6 +135,8 @@ void IHlslDrawBase::SetMatrix() {
 		m_pEffect->SetMatrixArray(m_hWorld, m_mtxWorld, 4);
 		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
 		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hLightView, &m_mtxLightView);
+		m_pEffect->SetMatrix(m_hLightProj, &m_mtxLightProj);
 	}
 
 	// シェーダーが使用できないときは、固定機能パイプラインのマトリックスを設定する
@@ -181,7 +182,7 @@ void IHlslDrawBase::SetCameraProj(Matrix& proj) {
 void IHlslDrawBase::SetLightView(Matrix& view) {
 	if (!IsOK())	return;
 
-	m_pEffect->SetMatrix(m_hLightView, &view);
+	m_mtxLightView = view;
 }
 
 
@@ -191,7 +192,7 @@ void IHlslDrawBase::SetLightView(Matrix& view) {
 void IHlslDrawBase::SetLightProj(Matrix& proj) {
 	if (!IsOK())	return;
 
-	m_pEffect->SetMatrix(m_hLightProj, &proj);
+	m_mtxLightProj = proj;
 }
 
 

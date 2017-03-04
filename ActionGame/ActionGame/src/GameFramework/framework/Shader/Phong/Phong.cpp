@@ -73,6 +73,12 @@ HRESULT Phong::Load() {
 	m_hSpecPow = m_pEffect->GetParameterByName(NULL, "SpecularPower");
 	m_hLightBloomPow = m_pEffect->GetParameterByName(NULL, "LightBloomPower");
 
+	m_hLightView = m_pEffect->GetParameterByName(NULL, "matLightView");
+	m_hLightProj = m_pEffect->GetParameterByName(NULL, "matLightProj");
+	m_hBias = m_pEffect->GetParameterByName(NULL, "fBias");
+	m_hScaleBias = m_pEffect->GetParameterByName(NULL, "matScaleBias");
+	m_hShadowMap = m_pEffect->GetParameterByName(NULL, "ShadowMap");
+
 	m_pEffect->SetTechnique(m_hTechnique);
 
 	return S_OK;
@@ -116,8 +122,10 @@ void Phong::SetMatrix() {
 
 		// ワールド × ビュー × 射影
 		m_pEffect->SetMatrixArray( m_hWorld, m_mtxWorld, 4 );
-		m_pEffect->SetMatrix( m_hCameraView, &m_mtxView );
-		m_pEffect->SetMatrix( m_hCameraProj, &m_mtxProj );
+		m_pEffect->SetMatrix(m_hCameraView, &m_mtxView);
+		m_pEffect->SetMatrix(m_hCameraProj, &m_mtxProj);
+		m_pEffect->SetMatrix(m_hLightView, &m_mtxLightView);
+		m_pEffect->SetMatrix(m_hLightProj, &m_mtxLightProj);
 
 		//カメラ位置
 		m1 = m_mtxWorld[0] * m_mtxView;

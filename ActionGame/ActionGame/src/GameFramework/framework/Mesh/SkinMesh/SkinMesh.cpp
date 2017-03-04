@@ -320,11 +320,15 @@ void SkinMesh::DrawShaderContainer(
 	IHlslDrawBase* pShader = (IHlslDrawBase*)GetShaderManager()->Get(type);
 	pShader->Begin();
 
-	pShader->SetLight(&GetLightManager()->Get("Directional")->GetDirection4());
-	pShader->SetLightView(GetLightManager()->Get("Directional")->GetView());
-	pShader->SetLightProj(GetLightManager()->Get("Directional")->GetProj());
+	//////////////////////////////////////
+	// ‚±‚±‚ÍŒã‚ÅC³
+	Light* light = GetLightManager()->Get("Directional");
+	pShader->SetLight(&light->GetDirection4());
+	pShader->SetLightView(light->GetView());
+	pShader->SetLightProj(light->GetProj());
 	ShadowMap* shadow = (ShadowMap*)GetShaderManager()->Get(SHADER_SHADOW);
 	pShader->SetShadowMap(shadow->GetShadowTex());
+	//////////////////////////////////////
 
 	pShader->SetCamera(&GetCameraManager()->CurrentCamera()->GetTransform()->GetPos());
 	pShader->SetSpecular(GetLightManager()->Get("Directional")->GetSpecular());

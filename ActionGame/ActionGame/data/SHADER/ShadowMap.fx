@@ -38,8 +38,8 @@ VS_OUTPUT VS_Skin(
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
 	//----- 座標変換
-	float4x4 matWorld = SkinWorldCreator(W);
-	Out.Pos = PosCreator(Pos, matWorld);
+	float4x4 World = SkinWorldCreator(W);
+	Out.Pos = PosCreator(Pos, World);
 
 	// カメラ座標系での深度をテクスチャに入れる
 	Out.ShadowMapUV = Out.Pos;

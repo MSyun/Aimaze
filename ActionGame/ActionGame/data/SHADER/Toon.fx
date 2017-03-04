@@ -50,6 +50,9 @@ struct VS_OUTPUT {
 	float2		Tex		:	TEXCOORD0;	// テクスチャ
 	float3		Normal	:	TEXCOORD1;	// 法線
 	float2		ToonUV	:	TEXCOORD2;	// トゥーンのエッジ
+
+	float4	ShadowMapUV	: TEXCOORD3;
+	float4	Depth		: TEXCOORD4;
 };
 
 
@@ -64,11 +67,12 @@ VS_OUTPUT VS (
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
 	// 座標変換
-	Out.Pos = PosCreator(Pos, matWorld[0]);
+	float4x4 World = matWorld[0];
+	Out.Pos = PosCreator(Pos, World);
 
 	float4 position;
-	position = mul(Pos, matWorld[0]);
-	Normal = mul(Normal, (float3x3)matWorld[0]);
+	position = mul(Pos, World);
+	Normal = mul(Normal, (float3x3)World);
 
 	// テクスチャ
 	Out.Tex = Tex;
@@ -86,25 +90,33 @@ VS_OUTPUT VS (
 	// 2つのベクトルの内積を0.0～から1.0の値にしてV座標にする
 	Out.ToonUV.y = dot(wv_pos, wv_normal) * 0.5 + 0.5;
 
+
+	float4x4 WLP = CreateLightWVP(World);
+	float4x4 WLPB = WLP * matScaleBias;
+
+	// シャドウマップ
+	Out.ShadowMapUV = mul(Pos, WLPB);
+	Out.Depth = mul(Pos, WLP);
+
 	return Out;
 }
 
 // スキンメッシュバージョン
 VS_OUTPUT VS_SKIN (
 		float4 Pos		: POSITION,			// ローカル位置座標
-		float4 W		: BLENDWEIGHT,		// 重み
 		float3 Normal	: NORMAL,			// 法線ベクトル
-		float2 Tex		: TEXCOORD0			// テクスチャ
+		float2 Tex		: TEXCOORD0,		// テクスチャ
+		float4 W		: BLENDWEIGHT		// 重み
 ) {
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 
 	//----- 座標変換
-	float4x4 matWorld = SkinWorldCreator(W);
-	Out.Pos = PosCreator(Pos, matWorld);
+	float4x4 World = SkinWorldCreator(W);
+	Out.Pos = PosCreator(Pos, World);
 
 	float4 position;
-	position = mul(Pos, matWorld);
-	Normal = mul(Normal, (float3x3)matWorld);
+	position = mul(Pos, World);
+	Normal = mul(Normal, (float3x3)World);
 
 	//----- テクスチャ
 	Out.Tex = Tex;
@@ -121,6 +133,14 @@ VS_OUTPUT VS_SKIN (
 
 	// 2つのベクトルの内積を0.0～から1.0の値にしてV座標にする
 	Out.ToonUV.y = dot(wv_pos, wv_normal) * 0.5 + 0.5;
+
+
+	float4x4 WLP = CreateLightWVP(World);
+	float4x4 WLPB = WLP * matScaleBias;
+
+	// シャドウマップ
+	Out.ShadowMapUV = mul(Pos, WLPB);
+	Out.Depth = mul(Pos, WLP);
 
 	return Out;
 }
@@ -143,6 +163,10 @@ float4 PS_pass0 ( VS_OUTPUT	In )	:	COLOR
 	// ライトを利用しテクスチャ座標を計算
 	float4 Col = tex2D(ToonSmp, float2(p.x, In.ToonUV.y));
 
+
+	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+//	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
+
 	return tex2D(TexSamp, In.Tex) * Col * vColor;
 }
 
@@ -162,6 +186,10 @@ float4 PS_pass1(VS_OUTPUT In)	:	COLOR
 
 	// ライトを利用しテクスチャ座標を計算
 	float4 Col = tex2D(ToonSmp, float2(p.x, In.ToonUV.y));
+
+
+	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+//	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
 	return Col * vColor;
 }

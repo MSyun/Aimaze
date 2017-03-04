@@ -12,16 +12,20 @@
 //			コンストラクタ			//
 //									*/
 Light::Light() {
+	SetName("Light");
+	SetShadow(false);
+
 	m_fLookLength = 10.0f;
 	D3DXMatrixIdentity(&m_mtxView);
 	D3DXMatrixIdentity(&m_mtxProj);
 	m_fNear		= 1.f;
-	m_fFar		= 1000.0f;
+	m_fFar		= 10.0f;
 	m_fSpeclar	= 100.0f;
 	m_vColor	= Color( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	GetTransform()->SetPos(0.0f, 10.0f, 0.0f);
-	GetTransform()->LookAt(Point3(0.0f, 0.0f, 3.0f));
+	GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
+	GetTransform()->Rotate(90.0f, 0.0f, 0.0f);
 }
 
 
@@ -37,17 +41,9 @@ Light::~Light() {
 //									*/
 void Light::Set(bool _custom) {
 	Transform* transform = GetTransform();
-	D3DXMatrixLookAtLH(
-		&m_mtxView,
-		&transform->GetPos(),
-		&(transform->GetPos() + transform->GetForward() * m_fLookLength),
-		&transform->GetUp());
-	D3DXMatrixPerspectiveFovLH(
-		&m_mtxProj,
-		D3DXToRadian(150),
-		(float)Screen::GetWidth() / (float)Screen::GetHeight(),
-		m_fNear,
-		m_fFar);
+	Point3 pos = transform->GetPos();
+	CreateView();
+	CreateProj();
 
 	// シェーダを使用しない場合固定機能仕様
 	if (!_custom) {
@@ -64,6 +60,44 @@ void Light::Set(bool _custom) {
 		GetGraphics()->GetDevice()->SetRenderState(D3DRS_AMBIENT, 0x00444444);	// 数値が高いほど明るい
 	} else
 		GetGraphics()->GetDevice()->LightEnable(0, FALSE);
+
+
+	Debug::Print("\nライト座標 :");
+	Debug::Print("X座標　：");
+	Debug::Print(m_pTransform->GetPos().x);
+	Debug::Print("Y座標　：");
+	Debug::Print(m_pTransform->GetPos().y);
+	Debug::Print("Z座標　：");
+	Debug::Print(m_pTransform->GetPos().z);
+
+	Point3 point = m_pTransform->GetPos() + GetDirection3();
+	Debug::Print("\nライト注視点 :");
+	Debug::Print("X座標　：");
+	Debug::Print(point.x);
+	Debug::Print("Y座標　：");
+	Debug::Print(point.y);
+	Debug::Print("Z座標　：");
+	Debug::Print(point.z);
+}
+
+void Light::CreateView() {
+	Transform* trans = GetTransform();
+	Point3 Pos = trans->GetPos();
+	D3DXMatrixLookAtLH(
+		&m_mtxView,
+		&Pos,
+		&(Pos + GetDirection3()),
+		&trans->GetUp());
+}
+
+
+void Light::CreateProj() {
+	D3DXMatrixPerspectiveFovLH(
+		&m_mtxProj,
+		D3DXToRadian(90),
+		(float)Screen::GetWidth() / (float)Screen::GetHeight(),
+		m_fNear,
+		m_fFar);
 }
 
 

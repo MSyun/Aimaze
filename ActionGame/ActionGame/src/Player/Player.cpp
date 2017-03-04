@@ -31,7 +31,7 @@ Player::Player() :
 {
 	SetName("Player");
 	SetTag(Archives::Tag("Player"));
-//	SetShaderType(_shadertype::SHADER_TOON);
+	SetShaderType(_shadertype::SHADER_TOON);
 
 	// Info
 	m_pInfo = new PlayerInformation;
@@ -176,6 +176,14 @@ void Player::LateUpdate() {
 	for (int i = 0; i < ATTACK_MAX; ++i) {
 		m_pAttack[i].m_Locus.Update();
 	}
+
+	Debug::Print("\nプレイヤー座標 :");
+	Debug::Print("X座標　：");
+	Debug::Print(m_pTransform->GetPos().x);
+	Debug::Print("Y座標　：");
+	Debug::Print(m_pTransform->GetPos().y);
+	Debug::Print("Z座標　：");
+	Debug::Print(m_pTransform->GetPos().z);
 }
 
 

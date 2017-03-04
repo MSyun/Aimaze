@@ -41,6 +41,9 @@ public:
 	virtual ~Light();
 	void Set(bool _custom = false);
 
+	void CreateView();
+	void CreateProj();
+
 	void SetLookLength(float len) { m_fLookLength = len; }
 	void AddLookLength(float len) { m_fLookLength += len; }
 	void SetNear(float _near) { m_fNear = _near; }

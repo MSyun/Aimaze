@@ -66,7 +66,7 @@ bool GameScene::Init() {
 	// Player
 	obj = new Player;
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
-//	obj->GetTransform()->SetPos(71.0f, 0.0f, -88.0f);
+	obj->GetTransform()->SetPos(0.0f, 0.0f, 0.0f);
 	obj->GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
 	LoadRate(10);
 
@@ -75,6 +75,7 @@ bool GameScene::Init() {
 	obj->SetName("Stage");
 	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Stage")));
 	obj->SetTag(Archives::Tag("Stage"));
+	obj->SetShaderType(SHADER_HALFLAMBERT);
 	LoadRate(30);
 
 	// CameraControll
@@ -96,14 +97,14 @@ bool GameScene::Init() {
 	GetShaderManager()->Create(SHADER_HALFLAMBERT);
 	GetShaderManager()->Create(SHADER_PHONG);
 	ShadowMap* map = (ShadowMap*)GetShaderManager()->Create(SHADER_SHADOW);
-	map->SetSize(Screen::GetWidth() / 2, Screen::GetHeight() / 2);
+	map->SetSize(Screen::GetWidth() / 3, Screen::GetHeight() / 3);
 	Toon* toon = (Toon*)GetShaderManager()->Create(SHADER_TOON);
 	toon->SetToonMap(GetTexManager()->Create(Archives::Texture("Toon")));
 	LoadRate(100);
 
 	Sprite* sprite = new Sprite;
 	sprite->SetTexture(map->GetShadowTex());
-	sprite->GetRectTransform()->SetPos(Screen::GetWidth() / 4, Screen::GetHeight() / 4, 0.0f);
+	sprite->GetRectTransform()->SetPos(Screen::GetWidth() / 5.0f, Screen::GetHeight() / 5.0f, 0.0f);
 
 	// ƒTƒEƒ“ƒh
 	GetSoundManager()->Load(SOUND_BGM, Archives::Sound("Field").c_str(), "Field");
@@ -190,12 +191,10 @@ void GameScene::WeaponCreate() {
 	m_pItemBoxManager->RecordItem(we);
 
 	we = new Sword;
-	we->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
 	we->GetTransform()->SetPos(50.f, 3.f, -88.f);
 	m_pItemBoxManager->RecordItem(we);
 
 	we = new Sword;
-	we->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
 	we->GetTransform()->SetPos(25.f, 3.f, -40.f);
 	m_pItemBoxManager->RecordItem(we);
 }

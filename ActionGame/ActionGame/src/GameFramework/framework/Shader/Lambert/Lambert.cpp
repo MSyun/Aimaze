@@ -69,6 +69,12 @@ HRESULT Lambert::Load() {
 	m_hAmbient = m_pEffect->GetParameterByName(NULL, "vColor");
 	m_hTexture = m_pEffect->GetParameterByName(NULL, "tex");
 
+	m_hLightView = m_pEffect->GetParameterByName(NULL, "matLightView");
+	m_hLightProj = m_pEffect->GetParameterByName(NULL, "matLightProj");
+	m_hBias = m_pEffect->GetParameterByName(NULL, "fBias");
+	m_hScaleBias = m_pEffect->GetParameterByName(NULL, "matScaleBias");
+	m_hShadowMap = m_pEffect->GetParameterByName(NULL, "ShadowMap");
+
 	m_pEffect->SetTechnique(m_hTechnique);
 
 	return S_OK;

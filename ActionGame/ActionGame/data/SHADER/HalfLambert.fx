@@ -4,6 +4,7 @@
 #include	"PosCreator.fh"
 #include	"Shadow.fh"
 
+
 // -------------------------------------------------------------
 // グローバル変数
 // -------------------------------------------------------------
@@ -30,8 +31,8 @@ struct VS_OUTPUT {
 	float2	Tex			: TEXCOORD0;
 	float3	Normal		: TEXCOORD1;
 
-	float4 ShadowMapUV	: TEXCOORD2;
-	float4 Depth		: TEXCOORD3;
+	float4	ShadowMapUV	: TEXCOORD2;
+	float4	Depth		: TEXCOORD3;
 };
 // -------------------------------------------------------------
 // シーンの描画
@@ -44,17 +45,17 @@ VS_OUTPUT VS(
 	VS_OUTPUT Out = (VS_OUTPUT)0;		// 出力データ
 	
 	// 座標変換
-	Out.Pos = PosCreator(Pos, matWorld[0]);
+	float4x4 World = matWorld[0];
+	Out.Pos = PosCreator(Pos, World);
 
 	// テクスチャ
 	Out.Tex = Tex;
 
 	// 法線
-	Out.Normal = mul(Normal, (float3x3)matWorld[0]);
+	Out.Normal = mul(Normal, (float3x3)World);
 
 
-	float4x4 WLP = matWorld[0] * matLightView;
-	WLP = WLP * matLightProj;
+	float4x4 WLP = CreateLightWVP(World);
 	float4x4 WLPB = WLP * matScaleBias;
 
 	// シャドウマップ
@@ -84,13 +85,13 @@ VS_OUTPUT VS_SKIN(
 	Out.Normal = mul(Normal, (float3x3)World);
 
 
-	float4x4 WLP = World * matLightView * matLightProj;
+	float4x4 WLP = CreateLightWVP(World);
 	float4x4 WLPB = WLP * matScaleBias;
 
 	// シャドウマップ
 	Out.ShadowMapUV = mul(Pos, WLPB);
 	Out.Depth = mul(Pos, WLP);
-	
+
 	return Out;
 }
 
@@ -112,10 +113,14 @@ float4 PS_pass0(VS_OUTPUT In) : COLOR
 
 
 	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
+//	return (float4)shadow;
+//	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
-	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.2f);
-
-	return Col * tex2D( TexSamp, In.Tex );
+	return Col * tex2D(TexSamp, In.Tex);
+	//return (float4)In.Depth.z;
+//	return (float4)(In.Depth.z / In.Depth.w);
+//	return In.ShadowMapUV;
+	return In.Depth;
 }
 
 float4 PS_pass1(VS_OUTPUT In) : COLOR
@@ -134,10 +139,14 @@ float4 PS_pass1(VS_OUTPUT In) : COLOR
 	Col.w = 1.0f;
 
 	float  shadow = tex2Dproj(ShadowMapSamp, In.ShadowMapUV).x;
-
-	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.5f);
+//	return (float4)shadow;
+//	Col = Col + ((shadow * In.Depth.w < In.Depth.z - fBias) ? 0 : Col * 0.3f);
 
 	return Col;
+	//return (float4)In.Depth.z;
+//	return (float4)(In.Depth.z / In.Depth.w);
+//	return In.ShadowMapUV;
+	return In.Depth;
 }
 
 // -------------------------------------------------------------
@@ -148,25 +157,25 @@ technique TShader
 	pass P0	// テクスチャあり
 	{
 		VertexShader = compile vs_1_1 VS();
-		PixelShader  = compile ps_2_0 PS_pass0();
+		PixelShader = compile ps_2_0 PS_pass0();
 	}
 
 	pass P1	// テクスチャなし
 	{
 		VertexShader = compile vs_1_1 VS();
-		PixelShader  = compile ps_2_0 PS_pass1();
+		PixelShader = compile ps_2_0 PS_pass1();
 	}
 
 	// スキンメッシュ
 	pass P2	// テクスチャあり
 	{
 		VertexShader = compile vs_1_1 VS_SKIN();
-		PixelShader  = compile ps_2_0 PS_pass0();
+		PixelShader = compile ps_2_0 PS_pass0();
 	}
 
 	pass P3	// テクスチャなし
 	{
 		VertexShader = compile vs_1_1 VS_SKIN();
-		PixelShader  = compile ps_2_0 PS_pass1();
+		PixelShader = compile ps_2_0 PS_pass1();
 	}
 }

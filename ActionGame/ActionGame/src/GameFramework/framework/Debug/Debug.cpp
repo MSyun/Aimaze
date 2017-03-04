@@ -7,7 +7,7 @@ int					Debug::m_Block_x = 0;
 int					Debug::m_Block_y = 3;
 
 #ifdef _DEBUG
-bool				Debug::m_bDraw = false;
+bool				Debug::m_bDraw = true;
 #else
 bool				Debug::m_bDraw = false;
 #endif // _DEBUG

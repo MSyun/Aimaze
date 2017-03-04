@@ -34,6 +34,10 @@ protected:
 	Matrix		m_mtxView;
 	Matrix		m_mtxProj;
 
+	// ‰e—p
+	Matrix		m_mtxLightView;
+	Matrix		m_mtxLightProj;
+
 #pragma endregion
 
 
