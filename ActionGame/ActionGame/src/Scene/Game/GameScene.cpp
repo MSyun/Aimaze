@@ -14,12 +14,11 @@
 #include	"../../GameFramework/framework/Texture/TexManager.h"
 #include	"../../GameFramework/framework/Light/LightManager.h"
 #include	"../../Archives/Archives.h"
-#include	"../../Weapon/Weapon.h"
-#include	"../../Animator/PlayerAnimator.h"
+#include	"../../Object/Weapon/Weapon.h"
 #include	"../../GameFramework/framework/Utility/System/SystemUtility.h"
-#include	"../../Mission/Mission.h"
+#include	"../../Object/Mission/Mission.h"
 #include	"../../GameFramework/framework/Screen/Screen.h"
-#include	"../../GameStart/GameStart.h"
+#include	"../../Object/GameStart/GameStart.h"
 #include	"../../GameFramework/framework/Sound/SoundManager.h"
 
 #include	"../../GameFramework/framework/Input/Input.h"
@@ -60,8 +59,8 @@ bool GameScene::Init() {
 	Obj3D* obj;
 	// Player
 	obj = (Obj3D*)Factory::Create(GAME_OBJ_PLAYER);
-	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
-	obj->GetTransform()->SetPos(0.0f, 0.0f, 0.0f);
+	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), Factory::Create(GAME_ANIMATOR_PLAYER));
+	obj->GetTransform()->SetPos(71.0f, 0.0f, -88.0f);
 	obj->GetTransform()->Rotate(0.0f, -90.0f, 0.0f);
 	LoadRate(10);
 

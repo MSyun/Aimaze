@@ -7,6 +7,7 @@
 
 
 #include	"../GameFramework/Obj/Obj.h"
+#include	"../GameFramework/Animator/IAnimator.h"
 
 
 typedef	enum {
@@ -37,8 +38,16 @@ typedef	enum {
 	GAME_OBJ_SWORD,
 	GAME_OBJ_MISSION,
 
+
 	GAME_OBJ_MAX
 } _GAME_OBJ_FACTORY;
+
+typedef enum {
+	GAME_ANIMATOR_DRAGON = 0,
+	GAME_ANIMATOR_PLAYER,
+	GAME_ANIMATOR_WIZARD,
+	GAME_ANIMATOR_WOLF,
+} _GAME_ANIMATOR_FACTORY;
 
 class Factory {
 public:
@@ -46,6 +55,7 @@ public:
 	virtual ~Factory() {}
 
 	static IObj* Create(_GAME_OBJ_FACTORY type, int val = 10);
+	static IAnimator* Create(_GAME_ANIMATOR_FACTORY type);
 
 private:
 

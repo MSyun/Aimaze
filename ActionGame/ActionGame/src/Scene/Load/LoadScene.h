@@ -8,7 +8,7 @@
 
 
 #include	"../../GameFramework/framework/Scene/SceneBase.h"
-#include	"../../Gauge/Gauge2.h"
+#include	"../../Object/Gauge/2D/Gauge2.h"
 #include	<vector>
 #include	"../../LoadingSprite/LoadingSprite.h"
 

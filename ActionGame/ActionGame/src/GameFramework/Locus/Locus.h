@@ -26,7 +26,7 @@ private:
 
 #pragma region variable
 
-#define		SAVE_NUM	40	// 保存フレーム
+#define		SAVE_NUM	400	// 保存フレーム
 #define		DIVIDE_NUM	3	// 分割線の数
 
 	bool	m_bUse;	// 記録フラグ

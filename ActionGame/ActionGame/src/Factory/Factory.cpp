@@ -4,31 +4,36 @@
 
 
 #include	"Factory.h"
-#include	"../Allow/Allow.h"
-#include	"../Attack/DragonBreath/DragonBreath.h"
-#include	"../Attack/DragonFlame/DragonFlame.h"
-#include	"../Attack/AttackMagic/AttackMagic.h"
-#include	"../Attack/DragonRush/DragonRush.h"
-#include	"../Attack/DragonStamp/DragonStamp.h"
-#include	"../CameraControll/CameraControll.h"
-#include	"../BossInformation/BossInformation.h"
-#include	"../Enemy/Dragon/Dragon.h"
-#include	"../Enemy/Wizard/Wizard.h"
-#include	"../Enemy/Wolf/Wolf.h"
-#include	"../PlayerInformation/PlayerInformation.h"
-#include	"../Player/Player.h"
-#include	"../GameClear/GameClear.h"
-#include	"../GameOver/GameOver.h"
-#include	"../GameStart/GameStart.h"
-#include	"../Gauge/Gauge2.h"
-#include	"../Gauge/Gauge3.h"
-#include	"../ItemBox/ItemBox.h"
-#include	"../LifeberOnHead/LifeberOnHead.h"
-#include	"../Pose/Pose.h"
-#include	"../Ring/Ring.h"
-#include	"../Weapon/Stick/Stick.h"
-#include	"../Weapon/Sword/Sword.h"
-#include	"../Mission/Mission.h"
+#include	"../Object/Allow/Allow.h"
+#include	"../Object/Attack/DragonBreath/DragonBreath.h"
+#include	"../Object/Attack/DragonFlame/DragonFlame.h"
+#include	"../Object/Attack/AttackMagic/AttackMagic.h"
+#include	"../Object/Attack/DragonRush/DragonRush.h"
+#include	"../Object/Attack/DragonStamp/DragonStamp.h"
+#include	"../Object/CameraControll/CameraControll.h"
+#include	"../Object/Character/Enemy/BossInformation/BossInformation.h"
+#include	"../Object/Character/Enemy/Dragon/Dragon.h"
+#include	"../Object/Character/Enemy/Wizard/Wizard.h"
+#include	"../Object/Character/Enemy/Wolf/Wolf.h"
+#include	"../Object/Character/Player/PlayerInformation/PlayerInformation.h"
+#include	"../Object/Character/Player/Player.h"
+#include	"../Object/GameClear/GameClear.h"
+#include	"../Object/GameOver/GameOver.h"
+#include	"../Object/GameStart/GameStart.h"
+#include	"../Object/Gauge/2D/Gauge2.h"
+#include	"../Object/Gauge/3D/Gauge3.h"
+#include	"../Object/ItemBox/ItemBox.h"
+#include	"../Object/LifeberOnHead/LifeberOnHead.h"
+#include	"../Object/Pose/Pose.h"
+#include	"../Object/Ring/Ring.h"
+#include	"../Object/Weapon/Stick/Stick.h"
+#include	"../Object/Weapon/Sword/Sword.h"
+#include	"../Object/Mission/Mission.h"
+
+#include	"../Animator/Dragon/DragonAnimator.h"
+#include	"../Animator/Player/PlayerAnimator.h"
+#include	"../Animator/Wizard/WizardAnimator.h"
+#include	"../Animator/Wolf/WolfAnimator.h"
 
 
 IObj* Factory::Create(_GAME_OBJ_FACTORY type, int val) {
@@ -141,4 +146,29 @@ IObj* Factory::Create(_GAME_OBJ_FACTORY type, int val) {
 	};
 
 	return obj;
+}
+
+
+IAnimator* Factory::Create(_GAME_ANIMATOR_FACTORY type) {
+	IAnimator* anim = NULL;
+
+	switch (type) {
+	case GAME_ANIMATOR_DRAGON:
+		anim = new DragonAnimator;
+		break;
+
+	case GAME_ANIMATOR_PLAYER:
+		anim = new PlayerAnimator;
+		break;
+
+	case GAME_ANIMATOR_WIZARD:
+		anim = new WizardAnimator;
+		break;
+
+	case GAME_ANIMATOR_WOLF:
+		anim = new WolfAnimator;
+		break;
+	};
+
+	return anim;
 }

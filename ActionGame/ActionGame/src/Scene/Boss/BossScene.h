@@ -7,7 +7,7 @@
 
 
 #include	"../../GameFramework/framework/Scene/SceneBase.h"
-#include	"../../ItemBox/ItemBoxManager.h"
+#include	"../../Object/ItemBox/ItemBoxManager.h"
 
 
 class BossScene	: public	SceneBase {

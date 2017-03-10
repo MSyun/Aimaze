@@ -15,15 +15,13 @@
 #include	"../../GameFramework/framework/Texture/TexManager.h"
 #include	"../../GameFramework/framework/Light/LightManager.h"
 #include	"../../Archives/Archives.h"
-#include	"../../Enemy/Dragon/Dragon.h"
+#include	"../../Object/Character/Enemy/Dragon/Dragon.h"
 
-#include	"../../Animator/PlayerAnimator.h"
-#include	"../../Animator/DragonAnimator.h"
 #include	"../../GameFramework/framework/Utility/System/SystemUtility.h"
 #include	"../../GameFramework/framework/Graphic/Graphics.h"
 #include	"../../GameFramework/DrawManager/DrawManager.h"
 #include	"../../GameFramework/framework/Input/Input.h"
-#include	"../../Weapon/Weapon.h"
+#include	"../../Object/Weapon/Weapon.h"
 #include	"../../Factory/Factory.h"
 
 
@@ -61,7 +59,7 @@ bool BossScene::Init() {
 	// Player
 	obj = (Obj3D*)Factory::Create(GAME_OBJ_PLAYER);
 	obj->ChangeOperate();
-	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), new PlayerAnimator);
+	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Player")), Factory::Create(GAME_ANIMATOR_PLAYER));
 	obj->GetTransform()->SetPos(0.0f, 0.0f, -60.0f);
 	LoadRate(10);
 
@@ -118,6 +116,8 @@ void BossScene::Release() {
 	GetSkinMeshManager()->Delete(Archives::Mesh("Dragon"));
 	GetSkinMeshManager()->Delete(Archives::Mesh("Land"));
 
+	GetLightManager()->Delete("Directional");
+
 	GetCameraManager()->Delete("Main");
 
 	GetObj3DManager()->AllClear();
@@ -142,7 +142,7 @@ void BossScene::EnemyCreate() {
 	Obj3D* obj;
 
 	obj = (Obj3D*)Factory::Create(GAME_OBJ_DRAGON, 30);
-	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Dragon")), new DragonAnimator);
+	obj->SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Dragon")), Factory::Create(GAME_ANIMATOR_DRAGON));
 }
 
 

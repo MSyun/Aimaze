@@ -79,9 +79,12 @@ void Time::Update() {
 
 	// 時間まで待って
 	DWORD dwTime = (DWORD)(m_dwFrameCount * m_fFrameTime + m_dwLastTime);
-	while(timeGetTime() <= dwTime) {
-//		Sleep(1);	// 休め
-	}
+//	DWORD hoge = timeGetTime();
+////	while(timeGetTime() <= dwTime) {
+//	while(hoge <= dwTime) {
+//		hoge += (DWORD)m_fFrameTime;
+////		Sleep(1);	// 休め
+//	}
 	DWORD time = timeGetTime();
 
 	// 更新スピードの割合計算
