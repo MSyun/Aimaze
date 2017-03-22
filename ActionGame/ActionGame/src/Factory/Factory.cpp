@@ -36,6 +36,10 @@
 #include	"../Animator/Wolf/WolfAnimator.h"
 
 
+
+/*									//
+//			オブジェクト生成		//
+//									*/
 IObj* Factory::Create(_GAME_OBJ_FACTORY type, int val) {
 	IObj* obj = NULL;
 
@@ -149,6 +153,9 @@ IObj* Factory::Create(_GAME_OBJ_FACTORY type, int val) {
 }
 
 
+/*									//
+//			アニメーター生成		//
+//									*/
 IAnimator* Factory::Create(_GAME_ANIMATOR_FACTORY type) {
 	IAnimator* anim = NULL;
 

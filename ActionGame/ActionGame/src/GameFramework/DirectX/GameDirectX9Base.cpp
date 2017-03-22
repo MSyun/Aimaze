@@ -11,6 +11,7 @@
 #include	"../framework/Save/SaveManagerBase.h"
 
 #include	"../framework/Utility/System/SystemUtility.h"
+#include	"../DelayFunction/Collection/DelayFunctionCollection.h"
 
 
 /*									//
@@ -146,6 +147,7 @@ void GameDirectX9Base::Update() {
 	m_pCurrentScene = m_pSceneManager->GetScene();
 	if (m_pCurrentScene)
 		m_pCurrentScene->Update();
+	DelayFunctionCollection::Update();
 
 	Debug::Print("\nFPS : ");
 	Debug::Print(Time::GetFrameRate());

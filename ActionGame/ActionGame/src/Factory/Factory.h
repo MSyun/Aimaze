@@ -54,7 +54,11 @@ public:
 	Factory() {}
 	virtual ~Factory() {}
 
+
+	// オブジェクト生成
 	static IObj* Create(_GAME_OBJ_FACTORY type, int val = 10);
+
+	// アニメーター生成
 	static IAnimator* Create(_GAME_ANIMATOR_FACTORY type);
 
 private:
