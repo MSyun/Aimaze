@@ -16,9 +16,9 @@
 #include	"../../Archives/Archives.h"
 #include	"../../Object/Weapon/Weapon.h"
 #include	"../../GameFramework/framework/Utility/System/SystemUtility.h"
-#include	"../../Object/Mission/Mission.h"
+#include	"../../GameFramework/Sprite/Scaling/ScalingSprite.h"
 #include	"../../GameFramework/framework/Screen/Screen.h"
-#include	"../../Object/GameStart/GameStart.h"
+#include	"../../GameFramework/Sprite/Moving/MovingSprite.h"
 #include	"../../GameFramework/framework/Sound/SoundManager.h"
 
 #include	"../../GameFramework/framework/Input/Input.h"
@@ -144,8 +144,7 @@ void GameScene::EnemyCreate() {
 void GameScene::SpriteCreate() {
 	Vector2 size((float)Screen::GetWidth(), (float)Screen::GetHeight());
 	// Start
-	GameStart* sprite = (GameStart*)Factory::Create(GAME_OBJ_GAMESTART);
-	sprite->SetChangeTime(1.0f);
+	MovingSprite* sprite = (MovingSprite*)Factory::Create(GAME_OBJ_GAMESTART);
 	sprite->SetTexture(GetTexManager()->Get(Archives::Texture("Start")));
 	sprite->GetOnEndPlayReverse()->AddListener([=]() {
 		Obj3D* obj = GetObj3DManager()->Find("Player");
@@ -158,13 +157,10 @@ void GameScene::SpriteCreate() {
 	});
 
 	// Mission
-	Mission* mission;
-	mission = (Mission*)Factory::Create(GAME_OBJ_MISSION);
-	mission->SetChangeTime(0.5f);
+	ScalingSprite* mission;
+	mission = (ScalingSprite*)Factory::Create(GAME_OBJ_MISSION);
 	mission->SetTexture(GetTexManager()->Get(Archives::Texture("Mission")));
-	mission->GetRectTransform()->SetPos(size.x / 2.0f, size.y / 2.0f, 0.0f);
 	mission->GetOnEndPlayReverse()->AddListener([=]() {
-		mission->Destroy();
 		sprite->Play(false);
 	});
 	GetSceneManagerWins()->GetFade()->GetOnBeginFadeOut()->AddListener([=]() {

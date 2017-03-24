@@ -4,8 +4,8 @@
 
 
 #include	"GameStart.h"
-#include	"../../GameFramework/framework/Screen/Screen.h"
-#include	"../../GameFramework/framework/Time/Time.h"
+#include	"../../../GameFramework/framework/Screen/Screen.h"
+#include	"../../../GameFramework/framework/Time/Time.h"
 
 
 
@@ -25,6 +25,8 @@ GameStart::GameStart() :
 	});
 	Reset(false);
 	ChangeEase(EaseOutCirc);
+
+	SetChangeTime(1.0f);
 }
 
 

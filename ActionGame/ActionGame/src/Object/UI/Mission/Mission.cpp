@@ -5,10 +5,10 @@
 
 
 #include	"Mission.h"
-#include	"../../GameFramework/GameController/GameControllerManager.h"
-#include	"../../GameFramework/framework/Screen/Screen.h"
-#include	"../../GameFramework/framework/Texture/TexManager.h"
-#include	"../../Archives/Archives.h"
+#include	"../../../GameFramework/GameController/GameControllerManager.h"
+#include	"../../../GameFramework/framework/Screen/Screen.h"
+#include	"../../../GameFramework/framework/Texture/TexManager.h"
+#include	"../../../Archives/Archives.h"
 
 
 /*									//
@@ -47,6 +47,9 @@ Mission::Mission(
 	});
 	m_pButton->GetRectTransform()->SetPos(Size.x * 0.66f, Size.y * 0.6f, 0.0f);
 	m_pButton->GetRectTransform()->SetScale(0.1f, 0.1f, 0.1f);
+
+	SetChangeTime(0.5f);
+	GetRectTransform()->SetPos(Size.x / 2.0f, Size.y / 2.0f, 0.0f);
 
 	ChangeEase(EaseOutBack);
 }

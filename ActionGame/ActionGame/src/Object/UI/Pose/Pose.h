@@ -5,9 +5,9 @@
 #pragma once
 
 
-#include	"../../GameFramework/Obj/2D/Sprite.h"
-#include	"../../GameFramework/Sprite/FadeColor/FadeColorSprite.h"
-#include	"../../GameFramework/Obj/3D/Obj3D.h"
+#include	"../../../GameFramework/Obj/2D/Sprite.h"
+#include	"../../../GameFramework/Sprite/FadeColor/FadeColorSprite.h"
+#include	"../../../GameFramework/Obj/3D/Obj3D.h"
 
 
 class Pose	:	public	Sprite {

@@ -4,15 +4,15 @@
 
 
 #include	"Pose.h"
-#include	"../../GameFramework/framework/Screen/Screen.h"
-#include	"../../GameFramework/framework/Texture/TexManager.h"
-#include	"../../Archives/Archives.h"
-#include	"../../GameFramework/framework/Sound/SoundManager.h"
-#include	"../../GameFramework/framework/Time/Time.h"
-#include	"../../GameFramework/GameController/GameControllerManager.h"
-#include	"../../GameFramework/framework/Scene/SceneManagerWin.h"
-#include	"../../GameFramework/framework/Collision/Collision.h"
-#include	"../../GameFramework/Obj/3D/Obj3DManager.h"
+#include	"../../../GameFramework/framework/Screen/Screen.h"
+#include	"../../../GameFramework/framework/Texture/TexManager.h"
+#include	"../../../Archives/Archives.h"
+#include	"../../../GameFramework/framework/Sound/SoundManager.h"
+#include	"../../../GameFramework/framework/Time/Time.h"
+#include	"../../../GameFramework/GameController/GameControllerManager.h"
+#include	"../../../GameFramework/framework/Scene/SceneManagerWin.h"
+#include	"../../../GameFramework/framework/Collision/Collision.h"
+#include	"../../../GameFramework/Obj/3D/Obj3DManager.h"
 
 
 typedef enum {

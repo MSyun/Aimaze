@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include	"../../GameFramework/Sprite/Moving/MovingSprite.h"
-#include	"../../GameFramework/Sprite/Animation/SpriteAnimation.h"
+#include	"../../../GameFramework/Sprite/Moving/MovingSprite.h"
+#include	"../../../GameFramework/Sprite/Animation/SpriteAnimation.h"
 
 
 

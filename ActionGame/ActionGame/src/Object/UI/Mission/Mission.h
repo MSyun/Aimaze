@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include	"../../GameFramework/Sprite/Scaling/ScalingSprite.h"
-#include	"../../GameFramework/Sprite/FadeColor/FadeColorSprite.h"
+#include	"../../../GameFramework/Sprite/Scaling/ScalingSprite.h"
+#include	"../../../GameFramework/Sprite/FadeColor/FadeColorSprite.h"
 
 
 class Mission	:	public	ScalingSprite {
