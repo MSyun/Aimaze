@@ -35,93 +35,40 @@ private:
 public:
 #pragma region method
 
-	IAnimator() : m_ChangeTime(-1.0f) {};
-	virtual ~IAnimator() {};
+	IAnimator();
+	virtual ~IAnimator();
 
 	// セッティング
-	void AnimatorSetting(HighLevelAnimController* Cont) {
-		m_Controller = Cont;
-		ShiftTime();
-		LoopTime();
-		Loop();
-		Period();
-		State();
-		StartState();
-	}
+	void AnimatorSetting(HighLevelAnimController* Cont);
 
-	void Update() {
-		if (m_ChangeTime >= 0.0f) {
-			m_ChangeTime -= Time::GetDeltaTime();
-			if (m_ChangeTime < 0.0f)
-				m_Controller->ChangeAnim(m_ChangeAnim);
-		}
-	}
+	// 更新
+	void Update();
 
 #pragma region Getter/Setter
-	bool GetBool(string name) {
-		auto it = m_Bool.find(name);
-		if (it == m_Bool.end()) {
-			Debug::LogError("Animator::GetBoolに" + name + "は見つかりません");
-			return false;
-		}
-		return *it->second;
-	}
-	int GetInt(string name) {
-		auto it = m_Int.find(name);
-		if (it == m_Int.end()) {
-			Debug::LogError("Animator::GetIntに" + name + "は見つかりません");
-			return -1;
-		}
-		return *it->second;
-	}
-	float GetFloat(string name) {
-		auto it = m_Float.find(name);
-		if (it == m_Float.end()) {
-			Debug::LogError("Animator::GetFloatに" + name + "は見つかりません");
-			return -1.0f;
-		}
-		return *it->second;
-	}
-	void SetBool(string name, bool value) {
-		auto it = m_Bool.find(name);
-		if (it == m_Bool.end()) {
-			Debug::LogError("Animator::SetBoolに" + name + "は見つかりません");
-			return;
-		}
-		*it->second = value;
-	}
-	void SetInt(string name, int value) {
-		auto it = m_Int.find(name);
-		if (it == m_Int.end()) {
-			Debug::LogError("Animator::SetIntに" + name + "は見つかりません");
-			return;
-		}
-		*it->second = value;
-	}
-	void SetFloat(string name, float value) {
-		auto it = m_Float.find(name);
-		if (it == m_Float.end()) {
-			Debug::LogError("Animator::SetFloatに" + name + "は見つかりません");
-			return;
-		}
-		*it->second = value;
-	}
-	void SetTrigger(string name) {
-		auto it = m_Trigger.find(name);
-		if (it == m_Trigger.end()) {
-			Debug::LogError("Animator::SetTriggerに" + name + "は見つかりません");
-			return;
-		}
-		*it->second = true;
-	}
+	// boolの取得
+	bool GetBool(string name);
+
+	// intの取得
+	int GetInt(string name);
+
+	// floatの取得
+	float GetFloat(string name);
+
+	// boolの設定
+	void SetBool(string name, bool value);
+
+	// intの設定
+	void SetInt(string name, int value);
+
+	// floatの設定
+	void SetFloat(string name, float value);
+
+	// triggerの設定
+	void SetTrigger(string name);
+#pragma endregion
 
 	// アニメーションの予約
-	void ChangeTime(float time, string anim) {
-		if (m_ChangeTime >= 0.0f)	return;
-		m_ChangeTime = time;
-		m_ChangeAnim = anim;
-	}
-#pragma endregion
+	void ChangeTime(float time, string anim);
 
 #pragma endregion
 
@@ -136,22 +83,17 @@ protected:
 	virtual void StartState() {}
 
 #pragma region Add
-	void AddBool(string name, bool* value) {
-		if (!value)	return;
-		m_Bool.insert(pair<string, bool*>(name, value));
-	}
-	void AddInt(string name, int* value) {
-		if (!value)	return;
-		m_Int.insert(pair<string, int*>(name, value));
-	}
-	void AddFloat(string name, float* value) {
-		if (!value)	return;
-		m_Float.insert(pair<string, float*>(name, value));
-	}
-	void AddTrigger(string name, trigger* value) {
-		if (!value)	return;
-		m_Trigger.insert(pair<string, trigger*>(name, value));
-	}
+	// boolの追加
+	void AddBool(string name, bool* value);
+
+	// intの追加
+	void AddInt(string name, int* value);
+
+	// floatの追加
+	void AddFloat(string name, float* value);
+
+	// triggerの追加
+	void AddTrigger(string name, trigger* value);
 #pragma endregion
 
 #pragma endregion

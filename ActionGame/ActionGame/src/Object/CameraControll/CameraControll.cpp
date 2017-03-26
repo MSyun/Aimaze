@@ -67,6 +67,9 @@ void CameraControll::LateUpdate() {
 
 	GetTransform()->SetPos(m_Player->GetPos());
 	GetTransform()->Translate(m_vShake, m_pTransform);
+
+	Debug::Print("\nƒJƒƒ‰À•W");
+	Debug::Print(m_Camera->GetTransform()->GetPos());
 }
 
 
@@ -84,16 +87,16 @@ void CameraControll::Input() {
 		GetTransform()->Rotate(0.0f, -RotateSpeed * Time::GetDeltaTime(), 0.0f);
 	}
 	// ƒJƒƒ‰‚Ì‹——£
-	if (Input::GetKeyPress(GetContManager()->Get()->GetKeyNum(BUTTON_R2)) ||
-		Input::GetJoyPress(0, GetContManager()->Get()->GetJoyNum(BUTTON_R2))) {
-		Transform* trans = m_Camera->GetTransform();
-		trans->Translate(0.0f, 0.0f, DistSpeed * Time::GetDeltaTime(), trans);
-	} else
-	if (Input::GetKeyPress(GetContManager()->Get()->GetKeyNum(BUTTON_L2)) ||
-		Input::GetJoyPress(0, GetContManager()->Get()->GetJoyNum(BUTTON_L2))) {
-		Transform* trans = m_Camera->GetTransform();
-		trans->Translate(0.0f, 0.0f, -DistSpeed * Time::GetDeltaTime(), trans);
-	}
+	//if (Input::GetKeyPress(GetContManager()->Get()->GetKeyNum(BUTTON_R2)) ||
+	//	Input::GetJoyPress(0, GetContManager()->Get()->GetJoyNum(BUTTON_R2))) {
+	//	Transform* trans = m_Camera->GetTransform();
+	//	trans->Translate(0.0f, 0.0f, DistSpeed * Time::GetDeltaTime(), trans);
+	//} else
+	//if (Input::GetKeyPress(GetContManager()->Get()->GetKeyNum(BUTTON_L2)) ||
+	//	Input::GetJoyPress(0, GetContManager()->Get()->GetJoyNum(BUTTON_L2))) {
+	//	Transform* trans = m_Camera->GetTransform();
+	//	trans->Translate(0.0f, 0.0f, -DistSpeed * Time::GetDeltaTime(), trans);
+	//}
 }
 
 

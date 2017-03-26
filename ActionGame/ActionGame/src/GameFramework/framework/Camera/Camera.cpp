@@ -19,7 +19,7 @@ Camera::Camera() :
 	m_fNear(1.0f),
 	m_fFar(1000.0f)
 {
-	GetTransform()->SetPos(0.0f, 5.0f, -10.0f);
+	GetTransform()->SetPos(0.0f, 6.0f, -12.0f);
 	m_fLookLength = 5.0f;
 	CreateSky();
 	SetName("Camera");

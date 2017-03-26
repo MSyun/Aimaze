@@ -67,5 +67,5 @@ void Allow::Update() {
 void Allow::OnCollisionTrigger(Obj3D* obj) {
 	Obj3D::OnCollisionTrigger(obj);
 
-	GetSceneManagerWins()->ChangeLoadCommand("Boss");
+	GetSceneManagerWins()->ChangeCommand("Boss");
 }

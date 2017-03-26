@@ -189,6 +189,9 @@ void Dragon::Init() {
 void Dragon::Update() {
 	Enemy::Update();
 
+	Debug::Print("\nドラゴン座標");
+	Debug::Print(GetTransform()->GetPos());
+
 	if (m_bDeath) {
 		Obj3D* obj = GetCameraManager()->CurrentCamera();
 		if (!obj)	return;
@@ -202,7 +205,7 @@ void Dragon::Update() {
 	m_ActionDelegate.Invoke();
 
 	if (m_fIntervalCnt > 0.0f) {
-		Debug::Print("インターバル中\n");
+		Debug::Print("\nインターバル中");
 		m_ActionDelegate.Set(NULL);
 		m_fIntervalCnt -= Time::GetDeltaTime();
 		if (0.0f >= m_fIntervalCnt) {
@@ -277,9 +280,9 @@ void Dragon::MiddleAnalyze() {
 	int rate = RAND_TEN;
 
 	// 火炎放射
-	if (rate < 3) {
-		AddListenAttack(ATTACK_FLAME);
-	} else
+	//if (rate < 3) {
+	//	AddListenAttack(ATTACK_FLAME);
+	//} else
 	// 火球
 	{
 		AddListenAttack(ATTACK_BREATH);
@@ -419,7 +422,7 @@ void Dragon::AttackStamp() {
 //				火球処理			//
 //									*/
 void Dragon::AttackBreath() {
-	Debug::Print("火球処理\n");
+	Debug::Print("\n火球処理");
 
 }
 
@@ -428,7 +431,7 @@ void Dragon::AttackBreath() {
 //			火炎放射処理			//
 //									*/
 void Dragon::AttackFlame() {
-	Debug::Print("火炎放射処理\n");
+	Debug::Print("\n火炎放射処理");
 
 }
 
@@ -437,7 +440,7 @@ void Dragon::AttackFlame() {
 //				突っ込み処理		//
 //									*/
 void Dragon::AttackRush() {
-	Debug::Print("突っ込み処理\n");
+	Debug::Print("\n突っ込み処理");
 
 }
 
