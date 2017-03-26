@@ -179,13 +179,8 @@ void Player::LateUpdate() {
 		m_pAttack[i].m_Locus.Update();
 	}
 
-	Debug::Print("\nプレイヤー座標 :");
-	Debug::Print("X座標　：");
-	Debug::Print(m_pTransform->GetPos().x);
-	Debug::Print("Y座標　：");
-	Debug::Print(m_pTransform->GetPos().y);
-	Debug::Print("Z座標　：");
-	Debug::Print(m_pTransform->GetPos().z);
+	Debug::Print("\nプレイヤー座標");
+	Debug::Print(m_pTransform->GetPos());
 }
 
 

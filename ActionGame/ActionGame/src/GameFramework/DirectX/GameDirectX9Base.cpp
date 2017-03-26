@@ -167,7 +167,7 @@ void GameDirectX9Base::Draw() {
 			m_pCurrentScene->Draw();	// シーン
 		m_pSceneManager->Draw();	// フェード
 
-		Debug::Render();
+		Debug::Draw();
 
 		// Direct3Dによる描画の終了
 		m_pDevice->EndScene();
