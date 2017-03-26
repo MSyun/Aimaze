@@ -4,6 +4,7 @@
 
 #include	"SpriteAnimation.h"
 #include	"../../framework/Time/Time.h"
+#include	"../../framework/Graphic/Graphics.h"
 
 
 /*									//
@@ -54,6 +55,12 @@ void SpriteAnimation::Update() {
 	SetVtx();
 	SetColor();
 	Animation();
+}
+
+
+void SpriteAnimation::Draw() {
+	GetGraphics()->GetDevice()->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	Sprite::Draw();
 }
 
 

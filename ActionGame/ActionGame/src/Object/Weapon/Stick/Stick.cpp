@@ -21,7 +21,7 @@ Stick::Stick() {
 	m_pCollider->SetObb(obb);
 
 	SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Stick")));
-	SetWeaponType(0);
+	SetWeaponType(_eWeaponType::WEAPON_STICK);
 	GetStatus().SetMaxLife(10);
 	GetStatus().SetPower(4);
 

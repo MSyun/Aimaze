@@ -98,6 +98,9 @@ void ArchivesTexture::Create() {
 
 	Add("GameClear", "data/TEXTURE/Game/GameClear.png");
 	Add("GameClear/Ber", "data/TEXTURE/Game/ClearBer.png");
+	Add("Cartridge", "data/TEXTURE/Cartridge/cartridge.png");
+	Add("SwordTip", "data/TEXTURE/Cartridge/SwordTip.png");
+	Add("StickTip", "data/TEXTURE/Cartridge/StickTip.png");
 }
 
 

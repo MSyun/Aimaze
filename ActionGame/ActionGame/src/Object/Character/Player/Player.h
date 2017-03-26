@@ -10,6 +10,7 @@
 #include	"../../../GameFramework/Locus/Locus.h"
 #include	"../../AttackCollisionSpace/AttackCollisionSpace.h"
 #include	"PlayerInformation/PlayerInformation.h"
+#include	"../../UI/WeaponStocker/WeaponStocker.h"
 
 
 class Player	:	public	Character {
@@ -31,6 +32,8 @@ private:
 	bool		m_bAttack;
 	bool		m_bHit;
 
+	WeaponStocker*	m_WeaponSprite;
+
 #pragma endregion
 
 public:
@@ -42,6 +45,7 @@ public:
 	// “–‚½‚Á‚Ä‚¢‚éŠÔ
 	virtual void OnCollisionStay(Obj3D* obj);
 
+	virtual void SetWeapon(Weapon* weapon);
 	virtual void Damage(int attack);
 
 #pragma endregion

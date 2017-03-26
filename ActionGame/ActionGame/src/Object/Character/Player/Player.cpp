@@ -25,11 +25,15 @@ Player::Player() :
 	m_pInfo(NULL),
 	m_pAttack(NULL),
 	m_bAttack(false),
-	m_bHit(false)
+	m_bHit(false),
+	m_WeaponSprite(NULL)
 {
 	SetName("Player");
 	SetTag(Archives::Tag("Player"));
 	SetShaderType(_shadertype::SHADER_TOON);
+
+	// WeaponStocker
+	m_WeaponSprite = (WeaponStocker*)Factory::Create(GAME_OBJ_WEAPONSTOCKER);
 
 	// Info
 	m_pInfo = new PlayerInformation;
@@ -240,6 +244,8 @@ void Player::AttackInput() {
 		if(GetWeapon())
 			m_pAnimator->SetTrigger("Attack");
 	}
+
+	if (m_bAttack)	return;
 	if (Input::GetKeyTrigger(GetContManager()->Get()->GetKeyNum(BUTTON_MARU)) ||
 		Input::GetJoyTrigger(0, GetContManager()->Get()->GetJoyNum(BUTTON_MARU))) {
 		m_pAnimator->SetBool("Weapon", false);
@@ -271,6 +277,19 @@ void Player::OnCollisionStay(Obj3D* obj) {
 			m_pAnimator->SetBool("Weapon", true);
 		}
 	}
+}
+
+
+/*									//
+//			•Ší‚ÌÝ’è				//
+//									*/
+void Player::SetWeapon(Weapon* weapon) {
+	Character::SetWeapon(weapon);
+
+	m_WeaponSprite->Play(!weapon);
+
+	if(weapon)
+		m_WeaponSprite->SetWeaponType(weapon->GetWeaponType());
 }
 
 

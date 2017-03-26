@@ -23,7 +23,7 @@ Sword::Sword() {
 	//m_pCollider->SetObb(obb);
 
 	SetModel(GetSkinMeshManager()->Get(Archives::Mesh("Sword")));
-	SetWeaponType(0);
+	SetWeaponType(_eWeaponType::WEAPON_SWORD);
 	GetStatus().SetMaxLife(10);
 	GetStatus().SetPower(4);
 

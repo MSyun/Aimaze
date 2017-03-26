@@ -145,11 +145,14 @@ public:
 		str = _T("");
 	}
 
+#pragma region Log
 	// ログの表示
 	static void Log(string message) {
 		message += "\n";
 		OutputDebugString(message.c_str());
 	}
+#pragma endregion Log
+
 	// エラーログの表示
 	static void LogError(string message) {
 #ifdef _DEBUG

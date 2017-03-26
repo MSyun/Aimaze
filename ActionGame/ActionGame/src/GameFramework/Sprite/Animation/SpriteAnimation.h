@@ -42,6 +42,7 @@ protected:
 #pragma region conceal method
 
 	virtual void Update();
+	virtual void Draw();
 
 #pragma endregion
 };

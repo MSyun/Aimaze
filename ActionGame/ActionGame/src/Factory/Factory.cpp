@@ -29,6 +29,7 @@
 #include	"../Object/Weapon/Stick/Stick.h"
 #include	"../Object/Weapon/Sword/Sword.h"
 #include	"../Object/UI/Mission/Mission.h"
+#include	"../Object/UI/WeaponStocker/WeaponStocker.h"
 
 #include	"../Animator/Dragon/DragonAnimator.h"
 #include	"../Animator/Player/PlayerAnimator.h"
@@ -146,6 +147,10 @@ IObj* Factory::Create(_GAME_OBJ_FACTORY type, int val) {
 
 	case GAME_OBJ_MISSION:
 		obj = new Mission;
+		break;
+
+	case GAME_OBJ_WEAPONSTOCKER:
+		obj = new WeaponStocker;
 		break;
 	};
 
