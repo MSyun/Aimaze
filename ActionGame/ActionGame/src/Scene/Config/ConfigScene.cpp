@@ -72,10 +72,10 @@ void ConfigScene::Update() {
 //									*/
 void ConfigScene::Draw() {
 
-	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	GetGraphics()->SetAlphaBlendEnable(false);
 	GetDrawManager()->Draw();
 
-	GetGraphics()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	GetGraphics()->SetAlphaBlendEnable(true);
 	GetDrawManager()->LateDraw();
 
 	GetObj2DManager()->Draw();

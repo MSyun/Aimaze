@@ -58,8 +58,11 @@ void SpriteAnimation::Update() {
 }
 
 
+/*									//
+//				•`‰æ				//
+//									*/
 void SpriteAnimation::Draw() {
-	GetGraphics()->GetDevice()->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	GetGraphics()->SetWrapMode(WRAPMODE_WRAP);
 	Sprite::Draw();
 }
 

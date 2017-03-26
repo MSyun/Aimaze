@@ -193,25 +193,22 @@ HRESULT DX9Base::CreateViewport() {
 //			ステイト設定			//
 //									*/
 void DX9Base::CreateState() {
+	m_pGraphics = new Graphics;
+	m_pGraphics->SetDevice(m_pDevice);
+
 	m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// 最初のアルファ引数
 	m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ２番目のアルファ引数
 
-	m_pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphics->SetCullMode(_eCullMode::CULLMODE_BACK);
+	m_pGraphics->SetAlphaBlendEnable(true);
 	m_pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	m_pGraphics->SetZEnable(true);
 
-	m_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-	m_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	m_pGraphics->SetWrapMode(_eWrapMode::WRAPMODE_WRAP);
 	m_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	m_pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-
-
-	m_pGraphics = new Graphics;
-	m_pGraphics->SetDevice(m_pDevice);
-
 }
 
 

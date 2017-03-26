@@ -6,7 +6,7 @@
 #include	"GameStart.h"
 #include	"../../../GameFramework/framework/Screen/Screen.h"
 #include	"../../../GameFramework/framework/Time/Time.h"
-
+#include	"../../../GameFramework/framework/Graphic/Graphics.h"
 
 
 /*									//
@@ -50,4 +50,13 @@ void GameStart::Update() {
 			GetOnEndPlayReverse()->AddListener([&]() { Destroy(); });
 		}
 	}
+}
+
+
+/*									//
+//				•`‰æ				//
+//									*/
+void GameStart::Draw() {
+	GetGraphics()->SetWrapMode(_eWrapMode::WRAPMODE_CLAMP);
+	MovingSprite::Draw();
 }

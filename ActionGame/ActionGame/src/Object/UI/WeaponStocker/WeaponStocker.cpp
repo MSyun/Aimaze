@@ -75,7 +75,7 @@ void WeaponStocker::Update() {
 //				•`‰æ				//
 //									*/
 void WeaponStocker::Draw() {
-	GetGraphics()->GetDevice()->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+	GetGraphics()->SetWrapMode(WRAPMODE_CLAMP);
 	MovingSprite::Draw();
 }
 

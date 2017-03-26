@@ -20,4 +20,5 @@ public:
 
 private:
 	virtual void Update();
+	virtual void Draw();
 };
