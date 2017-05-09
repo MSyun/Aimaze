@@ -12,7 +12,7 @@
 #include	<map>
 #include	<string>
 
-#include	"../Save/SaveObjBase.h"
+#include	"../Save/Obj/SaveObjBase.h"
 
 using namespace std;
 

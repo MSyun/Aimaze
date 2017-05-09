@@ -12,23 +12,42 @@ class	Application {
 public:
 #pragma region method
 
+	/* コンストラクタ
+	// width	:	ウィンドウの横幅
+	// height	:	ウィンドウの縦幅
+	// bwnd		:	ウィンドウの確認
+	*/
 	Application(
 		int width = 600,
 		int height = 480,
 		bool bwnd = true);
+
+	/* デストラクタ */
 	virtual ~Application();
 
-	// 実行
+	/* 実行
+	// _hInstance	:	インスタンスハンドル
+	*/
 	int Run(HINSTANCE _hInstance);
 
-	// ローカル用プロシージャ
+	/* ローカル用プロシージャ
+	// hWnd		:	ウィンドウハンドル
+	// msg		:	メッセージ
+	// wParam	:	パラメータ
+	// lParam	:	パラメータ
+	*/
 	virtual LRESULT LocalWindowProc(
 		HWND	hWnd,
 		UINT	msg,
 		WPARAM	wParam,
 		LPARAM	lParam);
 
-	// プロシージャ
+	/* プロシージャ
+	// hWnd		:	ウィンドウハンドル
+	// msg		:	メッセージ
+	// wParam	:	パラメータ
+	// lParam	:	パラメータ
+	*/
 	static LRESULT CALLBACK WndProc(
 		HWND	hWnd,
 		UINT	uMsg,

@@ -96,6 +96,6 @@ double DelayFunction::MateNoScale() {
 
 
 
-void DelayFunc(std::function<void(void)> func, double time) {
-	DelayFunction* DF = new DelayFunction(func, time);
+void DelayFunc(std::function<void(void)> func, double time, bool timeScale) {
+	DelayFunction* DF = new DelayFunction(func, time, timeScale);
 }

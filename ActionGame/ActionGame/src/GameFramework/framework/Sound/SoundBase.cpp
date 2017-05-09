@@ -9,7 +9,7 @@
 #include	"SoundBase.h"
 #include	"Wave/WaveLoader.h"
 
-#include	"../Save/SaveFactory.h"
+#include	"../Save/Factory/SaveFactory.h"
 #include	"../Debug/Debug.h"
 
 

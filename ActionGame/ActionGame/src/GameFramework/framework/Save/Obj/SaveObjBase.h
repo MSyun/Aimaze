@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include	"SaveManagerBase.h"
+#include	"../Manager/SaveManagerBase.h"
 
 
 // セーブデータオフセット構造体

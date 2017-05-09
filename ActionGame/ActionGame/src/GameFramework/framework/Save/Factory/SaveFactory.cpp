@@ -6,8 +6,8 @@
 
 #include	"SaveFactory.h"
 
-#include	"../Sound/SoundBase.h"
-#include	"../Sound/SoundManager.h"
+#include	"../../Sound/SoundBase.h"
+#include	"../../Sound/SoundManager.h"
 
 
 ISaveObjBase* SaveFactory::Create(int classID) {

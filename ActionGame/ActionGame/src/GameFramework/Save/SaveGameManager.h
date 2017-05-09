@@ -7,7 +7,7 @@
 #pragma once
 
 
-#include	"../framework/Save/SaveManagerBase.h"
+#include	"../framework/Save/Manager/SaveManagerBase.h"
 
 
 class SaveGameManager	:	public	SaveManagerBase {

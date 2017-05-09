@@ -10,6 +10,8 @@
 using namespace std;
 
 
+
+//----- 補完の種類
 enum EaseType {
 	// Quad
 	EaseInQuad,
@@ -55,23 +57,25 @@ enum EaseType {
 	EaseInOutElastic,
 };
 
-struct Keyframe {
+
+//----- キーフレーム
+struct tKeyframe {
 	Vector2	fInTangent;		// 前のキーフレームから、このキーフレームに近づくときの接線
 	Vector2	fOutTangent;	// 次のキーフレームに向かって、キーフレームを離れる際の接線
 	float	fTime;			// キーフレームの時間
 	float	fValue;			// キーフレームでのカーブの値
 
-	Keyframe(float time, float value) :
+	tKeyframe(float time, float value) :
 		fInTangent(time, value),
 		fOutTangent(time, value),
 		fTime(time),
 		fValue(value) {}
-	Keyframe(float time, float value, Vector2 inTangent, Vector2 outTangent) :
+	tKeyframe(float time, float value, Vector2 inTangent, Vector2 outTangent) :
 		fInTangent(inTangent),
 		fOutTangent(outTangent),
 		fTime(time),
 		fValue(value) {}
-	Keyframe(Keyframe& key) :
+	explicit tKeyframe(tKeyframe& key) :
 		fInTangent(key.fInTangent),
 		fOutTangent(key.fOutTangent),
 		fTime(key.fTime),
@@ -83,12 +87,13 @@ class AnimationCurve {
 private:
 #pragma region variable
 
-	vector<Keyframe*>	m_Keys;			// 登録済みのキーフレーム
+	vector<tKeyframe*>	m_Keys;			// 登録済みのキーフレーム
 	EaseType			m_CurrentEase;	// 現在の補完の種類
 
 #pragma endregion
 
 public:
+#pragma region method
 	AnimationCurve();
 	virtual ~AnimationCurve();
 
@@ -113,7 +118,7 @@ public:
 	// return	:	追加されたキーのインデックス
 	//				既にキーがその時間に存在する場合は-1
 	*/
-	int AddKey(Keyframe& key);
+	int AddKey(tKeyframe& key);
 
 	/* キーの削除
 	// index	:	削除するキーのインデックス
@@ -169,6 +174,8 @@ public:
 	void CreateInElastic();
 	void CreateOutElastic();
 	void CreateInOutElastic();
+#pragma endregion
+
 #pragma endregion
 
 protected:

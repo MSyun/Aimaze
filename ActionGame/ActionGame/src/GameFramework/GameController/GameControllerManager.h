@@ -9,7 +9,7 @@
 
 #include	"GameController.h"
 #include	"../framework/Singleton/Singleton.h"
-#include	"../framework/Save/SaveObjBase.h"
+#include	"../framework/Save/Obj/SaveObjBase.h"
 
 #include	<vector>
 

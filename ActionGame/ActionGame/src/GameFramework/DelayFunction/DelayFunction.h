@@ -42,4 +42,4 @@ private:
 };
 
 // Žg—p
-void DelayFunc(std::function<void(void)> func, double time);
+void DelayFunc(std::function<void(void)> func, double time, bool timeScale = true);

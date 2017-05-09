@@ -7,6 +7,7 @@
 #include	"../Character/Enemy/Enemy.h"
 #include	"../../GameFramework/framework/Sound/SoundManager.h"
 #include	"../../Archives/Archives.h"
+#include	"../../HitLateEffect/HitLateEffect.h"
 
 
 
@@ -67,6 +68,7 @@ void AttackCollisionSpace::OnCollisionStay(Obj3D* obj) {
 	m_pEffect->GetTransform()->SetPos(pos.x, pos.y + 2.0f, pos.z);
 	// 当たった時のエフェクト
 	m_pEffect->RePlay();
+	HitLateEffect::EnemyHit();
 
 	GetSoundManager()->Play(SOUND_SE, "Hit");
 }

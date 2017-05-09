@@ -72,7 +72,7 @@ public:
 		if (m_bOperate)
 			OnOperate();
 	}
-	void SetOperate(bool flg) {
+	void SetOperate(const bool flg) {
 		m_bOperate = flg;
 		if (m_bOperate)
 			OnOperate();

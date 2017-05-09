@@ -209,18 +209,18 @@ int AnimationCurve::AddKey(float time, float value) {
 		if (time == (*it)->fTime)	return -1;
 	}
 
-	Keyframe* Key = new Keyframe(time, value);
+	tKeyframe* Key = new tKeyframe(time, value);
 	m_Keys.push_back(Key);
 
 	return Length() - 1;
 }
 
-int AnimationCurve::AddKey(Keyframe& key) {
+int AnimationCurve::AddKey(tKeyframe& key) {
 	for (auto it = m_Keys.begin(); it != m_Keys.end(); ++it) {
 		if (key.fTime == (*it)->fTime)	return -1;
 	}
 
-	Keyframe* Key = new Keyframe(key);
+	tKeyframe* Key = new tKeyframe(key);
 	m_Keys.push_back(Key);
 
 	return Length() - 1;
@@ -246,9 +246,10 @@ void AnimationCurve::RemoveKey(int index) {
 //			timeのカーブを評価		//
 //									*/
 float AnimationCurve::Evaluate(float time) {
-	Keyframe* begin = NULL;
-	Keyframe* end = NULL;
+	tKeyframe* begin = NULL;
+	tKeyframe* end = NULL;
 
+	// 対応するキーフレームを検索
 	for (auto it = m_Keys.begin(); it != m_Keys.end(); ++it) {
 		if ((*it)->fTime == time)	return (*it)->fValue;
 
@@ -278,153 +279,153 @@ float AnimationCurve::Evaluate(float time) {
 #pragma region EaseCreate
 // Liner
 void AnimationCurve::CreateLiner() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.3f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.7f, 0.7f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.3f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.7f, 0.7f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Quad
 void AnimationCurve::CreateInQuad() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutQuad() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutQuad() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Cubic
 void AnimationCurve::CreateInCubic() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.6f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.6f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutCubic() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.4f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.4f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutCubic() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.6f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.4f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.6f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.4f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Quart
 void AnimationCurve::CreateInQuart() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.8f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.8f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutQuart() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.2f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.2f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutQuart() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.8f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.2f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.8f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.2f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Quint
 void AnimationCurve::CreateInQuint() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.9f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.7f, 0.2f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.9f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.7f, 0.2f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutQuint() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.8f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.1f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.8f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.1f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutQuint() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.9f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.1f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.9f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.1f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Expo
 void AnimationCurve::CreateInExpo() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(1.0f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.8f, 0.1f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(1.0f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.8f, 0.1f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutExpo() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.9f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.9f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutExpo() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(1.0f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(1.0f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Circ
 void AnimationCurve::CreateInCirc() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.5f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(1.0f, 0.5f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.5f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(1.0f, 0.5f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutCirc() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.0f, 0.5f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.5f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.0f, 0.5f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.5f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutCirc() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.25f, 0.0f));
-	Keyframe key2(0.5f, 0.5f, Vector2(0.5f, 0.25f), Vector2(0.5f, 0.75f));
-	Keyframe key3(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.25f, 0.0f));
+	tKeyframe key2(0.5f, 0.5f, Vector2(0.5f, 0.25f), Vector2(0.5f, 0.75f));
+	tKeyframe key3(1.0f, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
 }
 // Sine
 void AnimationCurve::CreateInSine() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.6f, 0.2f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateOutSine() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.4f, 0.8f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 void AnimationCurve::CreateInOutSine() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
-	Keyframe key2(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
+	tKeyframe key2(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 }
 // Bounce
 void AnimationCurve::CreateInBounce() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.05f, 0.05f));
-	Keyframe key2(0.1f, 0.0f, Vector2(0.05f, 0.05f), Vector2(0.15f, 0.1f));
-	Keyframe key3(0.3f, 0.0f, Vector2(0.25f, 0.1f), Vector2(0.4f, 0.3f));
-	Keyframe key4(0.6f, 0.0f, Vector2(0.5f, 0.3f), Vector2(0.65f, 0.4f));
-	Keyframe key5(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.05f, 0.05f));
+	tKeyframe key2(0.1f, 0.0f, Vector2(0.05f, 0.05f), Vector2(0.15f, 0.1f));
+	tKeyframe key3(0.3f, 0.0f, Vector2(0.25f, 0.1f), Vector2(0.4f, 0.3f));
+	tKeyframe key4(0.6f, 0.0f, Vector2(0.5f, 0.3f), Vector2(0.65f, 0.4f));
+	tKeyframe key5(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -432,11 +433,11 @@ void AnimationCurve::CreateInBounce() {
 	AddKey(key5);
 }
 void AnimationCurve::CreateOutBounce() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
-	Keyframe key2(0.4f, 1.0f, Vector2(0.35f, 0.6f), Vector2(0.5f, 0.3f));
-	Keyframe key3(0.7f, 1.0f, Vector2(0.6f, 0.7f), Vector2(0.75f, 0.9f));
-	Keyframe key4(0.9f, 1.0f, Vector2(0.85f, 0.9f), Vector2(0.95f, 0.95f));
-	Keyframe key5(1.0f, 1.0f, Vector2(0.95f, 0.95f), Vector2(1.3f, 1.0));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
+	tKeyframe key2(0.4f, 1.0f, Vector2(0.35f, 0.6f), Vector2(0.5f, 0.3f));
+	tKeyframe key3(0.7f, 1.0f, Vector2(0.6f, 0.7f), Vector2(0.75f, 0.9f));
+	tKeyframe key4(0.9f, 1.0f, Vector2(0.85f, 0.9f), Vector2(0.95f, 0.95f));
+	tKeyframe key5(1.0f, 1.0f, Vector2(0.95f, 0.95f), Vector2(1.3f, 1.0));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -444,15 +445,15 @@ void AnimationCurve::CreateOutBounce() {
 	AddKey(key5);
 }
 void AnimationCurve::CreateInOutBounce() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.025f, 0.025f));
-	Keyframe key2(0.05f, 0.0f, Vector2(0.025f, 0.025f), Vector2(0.1f, 0.05f));
-	Keyframe key3(0.15f, 0.0f, Vector2(0.1f, 0.05f), Vector2(0.2f, 0.15f));
-	Keyframe key4(0.3f, 0.0f, Vector2(0.25f, 0.15f), Vector2(0.35f, 0.2f));
-	Keyframe key5(0.5f, 0.5f, Vector2(0.4f, 0.5f), Vector2(0.6f, 0.5f));
-	Keyframe key6(0.7f, 1.0f, Vector2(0.65f, 0.8f), Vector2(0.75f, 0.85f));
-	Keyframe key7(0.85f, 1.0f, Vector2(0.8f, 0.85f), Vector2(0.9f, 0.95f));
-	Keyframe key8(0.95f, 1.0f, Vector2(0.9f, 0.95f), Vector2(0.975f, 0.975f));
-	Keyframe key9(1.0f, 1.0f, Vector2(0.975f, 0.975f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.025f, 0.025f));
+	tKeyframe key2(0.05f, 0.0f, Vector2(0.025f, 0.025f), Vector2(0.1f, 0.05f));
+	tKeyframe key3(0.15f, 0.0f, Vector2(0.1f, 0.05f), Vector2(0.2f, 0.15f));
+	tKeyframe key4(0.3f, 0.0f, Vector2(0.25f, 0.15f), Vector2(0.35f, 0.2f));
+	tKeyframe key5(0.5f, 0.5f, Vector2(0.4f, 0.5f), Vector2(0.6f, 0.5f));
+	tKeyframe key6(0.7f, 1.0f, Vector2(0.65f, 0.8f), Vector2(0.75f, 0.85f));
+	tKeyframe key7(0.85f, 1.0f, Vector2(0.8f, 0.85f), Vector2(0.9f, 0.95f));
+	tKeyframe key8(0.95f, 1.0f, Vector2(0.9f, 0.95f), Vector2(0.975f, 0.975f));
+	tKeyframe key9(1.0f, 1.0f, Vector2(0.975f, 0.975f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -465,26 +466,26 @@ void AnimationCurve::CreateInOutBounce() {
 }
 // Back
 void AnimationCurve::CreateInBack() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.0f));
-	Keyframe key2(0.6f, 0.0f, Vector2(0.4f, -0.2f), Vector2(0.8f, 0.2f));
-	Keyframe key3(1.0f, 1.0f, Vector2(0.9f, 0.6f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.3f, 0.0f));
+	tKeyframe key2(0.6f, 0.0f, Vector2(0.4f, -0.2f), Vector2(0.8f, 0.2f));
+	tKeyframe key3(1.0f, 1.0f, Vector2(0.9f, 0.6f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
 }
 void AnimationCurve::CreateOutBack() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.1f, 0.4f));
-	Keyframe key2(0.4f, 1.0f, Vector2(0.2f, 0.8f), Vector2(0.6f, 1.2f));
-	Keyframe key3(1.0f, 1.0f, Vector2(0.7f, 1.0f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.1f, 0.4f));
+	tKeyframe key2(0.4f, 1.0f, Vector2(0.2f, 0.8f), Vector2(0.6f, 1.2f));
+	tKeyframe key3(1.0f, 1.0f, Vector2(0.7f, 1.0f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
 }
 void AnimationCurve::CreateInOutBack() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
-	Keyframe key2(0.4f, 0.0f, Vector2(0.3f, -0.2f), Vector2(0.5f, 0.2f));
-	Keyframe key3(0.6f, 1.0f, Vector2(0.5f, 0.8f), Vector2(0.7f, 1.2f));
-	Keyframe key4(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
+	tKeyframe key2(0.4f, 0.0f, Vector2(0.3f, -0.2f), Vector2(0.5f, 0.2f));
+	tKeyframe key3(0.6f, 1.0f, Vector2(0.5f, 0.8f), Vector2(0.7f, 1.2f));
+	tKeyframe key4(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -492,13 +493,13 @@ void AnimationCurve::CreateInOutBack() {
 }
 // Elastic
 void AnimationCurve::CreateInElastic() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.025f));
-	Keyframe key2(0.3f, 0.0f, Vector2(0.25f, -0.025f), Vector2(0.4f, 0.05f));
-	Keyframe key3(0.5f, 0.0f, Vector2(0.45f, 0.025f), Vector2(0.55f, -0.025f));
-	Keyframe key4(0.65f, 0.0f, Vector2(0.6f, -0.1f), Vector2(0.7f, 0.2f));
-	Keyframe key5(0.8f, 0.0f, Vector2(0.75f, 0.2f), Vector2(0.825f, -0.1f));
-	Keyframe key6(0.9f, -0.3f, Vector2(0.85f, -0.2f), Vector2(0.95f, -0.3f));
-	Keyframe key7(1.0f, 1.0f, Vector2(0.975f, 0.95f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.025f));
+	tKeyframe key2(0.3f, 0.0f, Vector2(0.25f, -0.025f), Vector2(0.4f, 0.05f));
+	tKeyframe key3(0.5f, 0.0f, Vector2(0.45f, 0.025f), Vector2(0.55f, -0.025f));
+	tKeyframe key4(0.65f, 0.0f, Vector2(0.6f, -0.1f), Vector2(0.7f, 0.2f));
+	tKeyframe key5(0.8f, 0.0f, Vector2(0.75f, 0.2f), Vector2(0.825f, -0.1f));
+	tKeyframe key6(0.9f, -0.3f, Vector2(0.85f, -0.2f), Vector2(0.95f, -0.3f));
+	tKeyframe key7(1.0f, 1.0f, Vector2(0.975f, 0.95f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -508,13 +509,13 @@ void AnimationCurve::CreateInElastic() {
 	AddKey(key7);
 }
 void AnimationCurve::CreateOutElastic() {
-	Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.025f, 0.05f));
-	Keyframe key2(0.1f, 1.3f, Vector2(0.05f, 1.3f), Vector2(0.15f, 1.2f));
-	Keyframe key3(0.2f, 1.0f, Vector2(0.175f, 1.1f), Vector2(0.25f, 0.8f));
-	Keyframe key4(0.35f, 1.0f, Vector2(0.3f, 0.8f), Vector2(0.4f, 1.1f));
-	Keyframe key5(0.5f, 1.0f, Vector2(0.45f, 1.025f), Vector2(0.55f, 0.975f));
-	Keyframe key6(0.7f, 1.0f, Vector2(0.6f, 0.95f), Vector2(0.75f, 1.025f));
-	Keyframe key7(1.0f, 1.0f, Vector2(0.8f, 0.975f), Vector2(1.3f, 1.0f));
+	tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.025f, 0.05f));
+	tKeyframe key2(0.1f, 1.3f, Vector2(0.05f, 1.3f), Vector2(0.15f, 1.2f));
+	tKeyframe key3(0.2f, 1.0f, Vector2(0.175f, 1.1f), Vector2(0.25f, 0.8f));
+	tKeyframe key4(0.35f, 1.0f, Vector2(0.3f, 0.8f), Vector2(0.4f, 1.1f));
+	tKeyframe key5(0.5f, 1.0f, Vector2(0.45f, 1.025f), Vector2(0.55f, 0.975f));
+	tKeyframe key6(0.7f, 1.0f, Vector2(0.6f, 0.95f), Vector2(0.75f, 1.025f));
+	tKeyframe key7(1.0f, 1.0f, Vector2(0.8f, 0.975f), Vector2(1.3f, 1.0f));
 	AddKey(key1);
 	AddKey(key2);
 	AddKey(key3);
@@ -525,10 +526,10 @@ void AnimationCurve::CreateOutElastic() {
 }
 void AnimationCurve::CreateInOutElastic() {
 	Debug::LogError("CreateInOutElasticは利用できません");
-	//Keyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
-	//Keyframe key2(0.4f, 0.0f, Vector2(0.3f, -0.2f), Vector2(0.5f, 0.2f));
-	//Keyframe key3(0.6f, 1.0f, Vector2(0.5f, 0.8f), Vector2(0.7f, 1.2f));
-	//Keyframe key4(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0f));
+	//tKeyframe key1(0.0f, 0.0f, Vector2(-0.3f, 0.0f), Vector2(0.2f, 0.0f));
+	//tKeyframe key2(0.4f, 0.0f, Vector2(0.3f, -0.2f), Vector2(0.5f, 0.2f));
+	//tKeyframe key3(0.6f, 1.0f, Vector2(0.5f, 0.8f), Vector2(0.7f, 1.2f));
+	//tKeyframe key4(1.0f, 1.0f, Vector2(0.8f, 1.0f), Vector2(1.3f, 1.0f));
 	//AddKey(key1);
 	//AddKey(key2);
 	//AddKey(key3);

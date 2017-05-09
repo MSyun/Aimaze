@@ -10,7 +10,7 @@
 
 #include	"SoundBase.h"
 #include	"../Singleton/Singleton.h"
-#include	"../Save/SaveObjBase.h"
+#include	"../Save/Obj/SaveObjBase.h"
 
 
 /*

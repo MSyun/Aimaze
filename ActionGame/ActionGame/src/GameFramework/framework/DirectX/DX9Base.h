@@ -48,7 +48,7 @@ protected:
 public:
 #pragma region method
 
-	DX9Base(Application* app);
+	explicit DX9Base(Application* app);
 	virtual ~DX9Base();
 
 	// ‰Šú‰»

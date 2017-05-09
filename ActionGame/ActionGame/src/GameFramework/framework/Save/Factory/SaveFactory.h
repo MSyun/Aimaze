@@ -7,7 +7,7 @@
 #pragma once
 
 
-#include	"SaveObjBase.h"
+#include	"../Obj/SaveObjBase.h"
 
 
 typedef enum {

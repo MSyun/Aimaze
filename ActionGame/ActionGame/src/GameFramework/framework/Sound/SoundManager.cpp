@@ -7,7 +7,7 @@
 
 #include	"SoundManager.h"
 #include	<tchar.h>
-#include	"../Save/SaveFactory.h"
+#include	"../Save/Factory/SaveFactory.h"
 #include	"../Utility/System/SystemUtility.h"
 #include	"../Debug/Debug.h"
 

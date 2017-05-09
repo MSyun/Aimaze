@@ -15,7 +15,7 @@
 
 // このクラスを使う場合絶対必要なため
 #include	"../framework/Input/Input.h"
-#include	"../framework/Save/SaveObjBase.h"
+#include	"../framework/Save/Obj/SaveObjBase.h"
 
 
 typedef enum {

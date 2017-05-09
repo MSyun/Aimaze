@@ -8,7 +8,7 @@
 #include	"../framework/Debug/Debug.h"
 #include	"../framework/Input/Input.h"
 #include	"../framework/Time/Time.h"
-#include	"../framework/Save/SaveManagerBase.h"
+#include	"../framework/Save/Manager/SaveManagerBase.h"
 
 #include	"../framework/Utility/System/SystemUtility.h"
 #include	"../DelayFunction/Collection/DelayFunctionCollection.h"
